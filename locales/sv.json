@@ -156,6 +156,7 @@
     "taxes_included": "Skatter ingår.",
     "product_badge_sold_out": "Slutsåld",
     "product_badge_sale": "Rea",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "search_input_label": "Sökning",
     "search_input_placeholder": "Sök",
     "search_results": "Sökresultat",

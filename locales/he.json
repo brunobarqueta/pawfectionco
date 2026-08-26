@@ -217,6 +217,7 @@
     "product_total": "סך הכול למוצרים",
     "product_badge_sold_out": "אזל מהמלאי",
     "product_badge_sale": "מבצע",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "product_card_placeholder": "כותרת מוצר",
     "placeholder_image": "תמונת מציין מקום",
     "quantity": "כמות",

@@ -1,3 +1,19 @@
+{%- comment -%}
+  Pawfectionco brand fonts (Cabinet Grotesk / Satoshi) via Fontshare.
+  Shopify's font_picker only supports the built-in font library, so these are
+  loaded manually here and then mapped onto the theme's CSS font-family
+  variables in assets/pawfectionco-tokens.css.
+{%- endcomment -%}
+<link
+  rel="preconnect"
+  href="https://api.fontshare.com"
+  crossorigin
+>
+<link
+  rel="stylesheet"
+  href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@900,800,700&f[]=satoshi@700,500,400&display=swap"
+>
+
 {%- unless settings.type_body_font.system? -%}
   {{ settings.type_body_font | font_url | preload_tag: as: 'font', type: 'font/woff2', fetchpriority: 'low' }}
 {%- endunless -%}

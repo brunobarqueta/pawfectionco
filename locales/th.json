@@ -156,6 +156,7 @@
     "taxes_included": "รวมภาษีแล้ว",
     "product_badge_sold_out": "ขายหมดแล้ว",
     "product_badge_sale": "ลดราคา",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "search_input_label": "การค้นหา",
     "search_input_placeholder": "ค้นหา",
     "search_results": "ผลลัพธ์การค้นหา",

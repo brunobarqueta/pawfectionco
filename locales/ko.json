@@ -156,6 +156,7 @@
     "taxes_included": "세금이 포함된 가격입니다.",
     "product_badge_sold_out": "품절",
     "product_badge_sale": "판매",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "search_input_label": "검색",
     "search_input_placeholder": "검색",
     "search_results": "검색 결과",

@@ -158,6 +158,7 @@
     "taxes_included": "Imposte incluse.",
     "product_badge_sold_out": "Esaurito",
     "product_badge_sale": "In offerta",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "search_input_label": "Ricerca",
     "search_input_placeholder": "Ricerca",
     "search_results": "Risultati della ricerca",

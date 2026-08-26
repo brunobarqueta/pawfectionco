@@ -156,6 +156,7 @@
     "taxes_included": "Inkl. Steuern.",
     "product_badge_sold_out": "Ausverkauft",
     "product_badge_sale": "Sale",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "search_input_label": "Suchen",
     "search_input_placeholder": "Suchen",
     "search_results": "Suchergebnisse",

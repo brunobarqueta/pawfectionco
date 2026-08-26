@@ -160,6 +160,7 @@
     "taxes_included": "Z wliczonymi podatkami.",
     "product_badge_sold_out": "Wyprzedane",
     "product_badge_sale": "W promocji",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "search_input_label": "Szukaj",
     "search_input_placeholder": "Szukaj",
     "search_results": "Wyniki wyszukiwania",

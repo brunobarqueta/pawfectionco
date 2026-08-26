@@ -223,6 +223,7 @@
     "product_total": "إجمالي المنتج",
     "product_badge_sold_out": "نفد المخزون",
     "product_badge_sale": "تخفيض",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "product_card_placeholder": "عنوان المنتج",
     "placeholder_image": "صورة عنصر نائب",
     "quantity": "الكمية",

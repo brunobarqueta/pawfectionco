@@ -157,6 +157,7 @@
     "taxes_included": "Taxes incluses.",
     "product_badge_sold_out": "Épuisé",
     "product_badge_sale": "Promotion",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "grid_view": {
       "default_view": "Par défaut",
       "grid_fieldset": "Grille de colonnes",

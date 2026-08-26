@@ -156,6 +156,7 @@
     "taxes_included": "Οι φόροι συμπεριλαμβάνονται.",
     "product_badge_sold_out": "Εξαντλήθηκε",
     "product_badge_sale": "Έκπτωση",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "search_input_label": "Αναζήτηση",
     "search_input_placeholder": "Αναζήτηση",
     "search_results": "Αποτελέσματα αναζήτησης",

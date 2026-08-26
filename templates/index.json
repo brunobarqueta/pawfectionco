@@ -15,12 +15,12 @@
           "type": "text",
           "name": "t:names.heading",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
+            "text": "<h1>A seat belt your dog can't wiggle out of</h1>",
             "text_color": "{{ settings.color_palette.background }}",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
-            "type_preset": "h2",
+            "type_preset": "h1",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
             "line_height": "normal",
@@ -37,20 +37,46 @@
           },
           "blocks": {}
         },
+        "text_heroSub01": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Crash-tested webbing and a padded harness clip that locks in place, so backseat chaos stays in the backseat.</p>",
+            "text_color": "{{ settings.color_palette.background }}",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "paragraph",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 12,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "button_H9gpTf": {
           "type": "button",
           "name": "t:names.button",
           "settings": {
-            "label": "Shop all",
+            "label": "Shop bestsellers",
             "link": "shopify://collections/all",
             "open_in_new_tab": false,
-            "style_class": "button-custom",
-            "custom_button_background": "rgba(0,0,0,0)",
-            "custom_button_text": "{{ settings.color_palette.background }}",
+            "style_class": "button",
+            "custom_button_background": "{{ settings.color_palette.background }}",
+            "custom_button_text": "{{ settings.color_palette.foreground }}",
             "custom_button_border": "{{ settings.color_palette.background }}",
             "width": "fit-content",
             "custom_width": 100,
-            "width_mobile": "fit-content",
+            "width_mobile": "custom",
             "custom_width_mobile": 100
           },
           "blocks": {}
@@ -58,6 +84,7 @@
       },
       "block_order": [
         "text_YLPk4p",
+        "text_heroSub01",
         "button_H9gpTf"
       ],
       "name": "t:names.hero",
@@ -74,13 +101,13 @@
         "horizontal_alignment": "space-between",
         "vertical_alignment": "flex-end",
         "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
+        "horizontal_alignment_flex_direction_column": "flex-start",
         "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
+        "gap": 16,
         "section_width": "page-width",
         "section_height": "medium",
         "section_height_custom": 50,
-        "background_color": "rgba(0,0,0,0)",
+        "background_color": "{{ settings.color_palette.foreground }}",
         "toggle_overlay": true,
         "overlay_color": "#12121266",
         "overlay_style": "solid",
@@ -88,7 +115,46 @@
         "blurred_reflection": false,
         "reflection_opacity": 75,
         "padding-block-start": 100,
-        "padding-block-end": 72
+        "padding-block-end": 48
+      }
+    },
+    "pc_trust_bar_1": {
+      "type": "pc-trust-bar",
+      "name": "Trust bar",
+      "blocks": {
+        "item-1": {
+          "type": "_pc-trust-item",
+          "settings": {
+            "icon": "icon-available.svg",
+            "label": "Free shipping over $49"
+          }
+        },
+        "item-2": {
+          "type": "_pc-trust-item",
+          "settings": {
+            "icon": "icon-checkmark.svg",
+            "label": "Crash-tested buckle"
+          }
+        },
+        "item-3": {
+          "type": "_pc-trust-item",
+          "settings": {
+            "icon": "icon-checkmark-burst.svg",
+            "label": "30-day returns"
+          }
+        },
+        "item-4": {
+          "type": "_pc-trust-item",
+          "settings": {
+            "icon": "icon-account.svg",
+            "label": "Vet-recommended fit"
+          }
+        }
+      },
+      "block_order": ["item-1", "item-2", "item-3", "item-4"],
+      "settings": {
+        "padding-block-start": 32,
+        "padding-block-end": 32
       }
     },
     "product_list_fa6P9H": {
@@ -130,11 +196,11 @@
               "type": "_product-list-text",
               "name": "t:names.collection_title",
               "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
+                "text": "<h2>Bestsellers</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "h4",
+                "type_preset": "h2",
                 "font": "var(--font-body--family)",
                 "line_height": "normal",
                 "letter_spacing": "normal",
@@ -175,11 +241,11 @@
           "name": "t:names.product_card",
           "static": true,
           "settings": {
-            "product_card_gap": 4,
+            "product_card_gap": 8,
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
-            "border_radius": 0,
+            "border_radius": 14,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -194,7 +260,7 @@
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
-                "border_radius": 0,
+                "border_radius": 14,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -265,7 +331,7 @@
         "columns": 4,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
-        "columns_gap": 8,
+        "columns_gap": 12,
         "rows_gap": 24,
         "icons_style": "arrow",
         "icons_shape": "none",
@@ -276,10 +342,194 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "editorial_band_1": {
+      "type": "media-with-content",
+      "name": "t:names.media_with_text",
+      "blocks": {
+        "media": {
+          "type": "_media-without-appearance",
+          "static": true
+        },
+        "content": {
+          "type": "_content-without-appearance",
+          "static": true,
+          "settings": {
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "space-between"
+          },
+          "blocks": {
+            "caption": {
+              "type": "text",
+              "name": "t:names.caption",
+              "settings": {
+                "text": "<p>Why pet parents switch</p>",
+                "type_preset": "h6"
+              }
+            },
+            "group": {
+              "type": "group",
+              "settings": {
+                "height": "fit"
+              },
+              "blocks": {
+                "heading": {
+                  "type": "text",
+                  "name": "t:names.heading",
+                  "settings": {
+                    "text": "<h2>Built by people who actually road-trip with pets</h2>",
+                    "type_preset": "h2"
+                  }
+                },
+                "text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Every buckle gets pull-tested to 800 lb before it ships. Every shower nozzle gets aimed by a dog who hates baths. We design for the moments that actually matter, not the photo shoot.</p>",
+                    "max_width": "narrow",
+                    "type_preset": "rte"
+                  }
+                }
+              },
+              "block_order": ["heading", "text"]
+            },
+            "button": {
+              "type": "button",
+              "settings": {
+                "label": "See how it's tested",
+                "link": "shopify://collections/all",
+                "style_class": "button-unstyled",
+                "link_text_color": "#7a3fc4"
+              }
+            }
+          },
+          "block_order": ["caption", "group", "button"]
+        }
+      },
+      "block_order": ["media", "content"],
+      "settings": {
+        "media_position": "right",
+        "media_width": "medium",
+        "media_height": "60svh",
+        "section_width": "full-width",
+        "extend_media": true,
+        "background_color": "#f3ecfd",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "pc_testimonials_1": {
+      "type": "pc-testimonials",
+      "name": "Testimonials",
+      "blocks": {
+        "t1": {
+          "type": "_pc-testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Our pug is a wiggler and this seat belt actually held during a hard brake. Worth every dollar.",
+            "author": "Maria T.",
+            "author_meta": "Dog parent to Biscuit"
+          }
+        },
+        "t2": {
+          "type": "_pc-testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "The shower attachment cut bath time in half and my golden retriever barely fought me on it.",
+            "author": "Devon K.",
+            "author_meta": "Dog parent to Zuri"
+          }
+        },
+        "t3": {
+          "type": "_pc-testimonial",
+          "settings": {
+            "rating": 4,
+            "quote": "Simple, sturdy, no squeaky parts after two months of daily fetch. My cat even approves.",
+            "author": "Priya S.",
+            "author_meta": "Cat parent to Momo"
+          }
+        },
+        "t4": {
+          "type": "_pc-testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Finally a car harness that clips into the real seat belt buckle instead of some flimsy strap.",
+            "author": "Jordan L.",
+            "author_meta": "Dog parent to Otis"
+          }
+        }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "settings": {
+        "heading": "Pet parents trust Pawfectionco",
+        "heading_preset": "h2",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "email_signup_1": {
+      "type": "section",
+      "name": "t:names.section",
+      "blocks": {
+        "email_signup_block": {
+          "type": "email-signup",
+          "settings": {
+            "width": "custom",
+            "custom_width": 100,
+            "heading": "Get 10% off your first order",
+            "heading_text_color": "#faf6ec",
+            "heading_preset": "h3",
+            "border_style": "all",
+            "input_style": "default",
+            "style_class": "button-custom",
+            "custom_button_background": "#7a3fc4",
+            "custom_button_text": "#ffffff",
+            "custom_button_border": "#7a3fc4",
+            "display_type": "text",
+            "label": "Get my code",
+            "integrated_button": false,
+            "button_type_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": ["email_signup_block"],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "{{ settings.color_palette.foreground }}",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "padding-block-start": 64,
+        "padding-block-end": 64
+      }
     }
   },
   "order": [
     "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "pc_trust_bar_1",
+    "product_list_fa6P9H",
+    "editorial_band_1",
+    "pc_testimonials_1",
+    "email_signup_1"
   ]
 }

@@ -158,6 +158,7 @@
     "taxes_included": "Impuestos incluidos.",
     "product_badge_sold_out": "Agotado",
     "product_badge_sale": "Oferta",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "grid_view": {
       "default_view": "Predeterminado",
       "grid_fieldset": "Columna de cuadrícula",

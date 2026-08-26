@@ -160,6 +160,7 @@
     "taxes_included": "Včetně daní.",
     "product_badge_sold_out": "Vyprodáno",
     "product_badge_sale": "Výprodej",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "search_input_label": "Začněte hledat",
     "search_input_placeholder": "Vyhledat",
     "search_results": "Výsledky hledání",

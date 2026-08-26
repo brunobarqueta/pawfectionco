@@ -160,6 +160,7 @@
     "taxes_included": "Налоги включены.",
     "product_badge_sold_out": "Распродано",
     "product_badge_sale": "Распродажа",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "search_input_label": "Поиск",
     "search_input_placeholder": "Поиск",
     "search_results": "Результаты поиска",

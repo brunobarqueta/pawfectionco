@@ -156,6 +156,7 @@
     "taxes_included": "Vergiler dahildir.",
     "product_badge_sold_out": "Tükendi",
     "product_badge_sale": "İndirimde",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "search_input_label": "Ara",
     "search_input_placeholder": "Ara",
     "search_results": "Arama sonuçları",

@@ -1,0 +1,200 @@
+{% comment %}
+  Pawfectionco testimonials / social proof. Horizontal-scrolling row of
+  merchant-editable quote cards (quote, author, meta, rating, avatar).
+  There is no review app installed yet, so this content is authored by the
+  merchant via block settings rather than pulled from product review data.
+{% endcomment %}
+
+<div
+  class="section section--page-width spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {{ section.shopify_attributes }}
+>
+  {%- if section.settings.heading != blank -%}
+    <h2
+      class="{{ section.settings.heading_preset }}"
+      style="padding-inline: 16px; margin: 0 0 24px;"
+    >
+      {{- section.settings.heading | escape -}}
+    </h2>
+  {%- endif -%}
+
+  <div class="pc-testimonials__track">
+    {%- for block in section.blocks -%}
+      {%- if block.type == '_pc-testimonial' -%}
+        <div
+          class="pc-testimonial-card"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.rating > 0 -%}
+            <div
+              class="pc-testimonial-card__stars"
+              role="img"
+              aria-label="{{ block.settings.rating }} out of 5 stars"
+            >
+              {%- assign full_stars = block.settings.rating | floor -%}
+              {%- for i in (1..5) -%}
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path
+                    d="M12 2l2.9 6.4 7.1.6-5.4 4.7 1.7 6.9L12 16.9 5.7 20.6l1.7-6.9L2 9l7.1-.6L12 2z"
+                    {% if i > full_stars %}fill="none" stroke="currentColor" stroke-width="1.5"{% endif %}
+                  ></path>
+                </svg>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.quote != blank -%}
+            <p class="pc-testimonial-card__quote">&ldquo;{{ block.settings.quote | escape }}&rdquo;</p>
+          {%- endif -%}
+
+          <div class="pc-testimonial-card__author">
+            {%- if block.settings.avatar != blank -%}
+              {{
+                block.settings.avatar
+                | image_url: width: 72
+                | image_tag: class: 'pc-testimonial-card__avatar', width: 36, height: 36, alt: block.settings.author
+              }}
+            {%- else -%}
+              <span class="pc-testimonial-card__avatar" aria-hidden="true"></span>
+            {%- endif -%}
+            <div>
+              {%- if block.settings.author != blank -%}
+                <div class="pc-testimonial-card__author-name">{{ block.settings.author | escape }}</div>
+              {%- endif -%}
+              {%- if block.settings.author_meta != blank -%}
+                <div class="pc-testimonial-card__author-meta">{{ block.settings.author_meta | escape }}</div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "div",
+  "blocks": [
+    {
+      "type": "_pc-testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating (out of 5)",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Our pug is a wiggler and this seat belt actually held during a hard brake. Worth every dollar."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author name",
+          "default": "Maria T."
+        },
+        {
+          "type": "text",
+          "id": "author_meta",
+          "label": "Author detail",
+          "default": "Dog parent to Biscuit"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar (optional)"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Pet parents trust Pawfectionco"
+    },
+    {
+      "type": "select",
+      "id": "heading_preset",
+      "label": "Heading size",
+      "options": [
+        { "value": "h2", "label": "H2" },
+        { "value": "h3", "label": "H3" }
+      ],
+      "default": "h2"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "category": "Pawfectionco",
+      "blocks": {
+        "t1": {
+          "type": "_pc-testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "Our pug is a wiggler and this seat belt actually held during a hard brake. Worth every dollar.",
+            "author": "Maria T.",
+            "author_meta": "Dog parent to Biscuit"
+          }
+        },
+        "t2": {
+          "type": "_pc-testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "The shower attachment cut bath time in half and my golden retriever barely fought me on it.",
+            "author": "Devon K.",
+            "author_meta": "Dog parent to Zuri"
+          }
+        },
+        "t3": {
+          "type": "_pc-testimonial",
+          "settings": {
+            "rating": 4,
+            "quote": "Simple, sturdy, no squeaky parts after two months of daily fetch. My cat even approves.",
+            "author": "Priya S.",
+            "author_meta": "Cat parent to Momo"
+          }
+        }
+      },
+      "block_order": ["t1", "t2", "t3"]
+    }
+  ]
+}
+{% endschema %}

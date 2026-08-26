@@ -158,6 +158,7 @@
     "taxes_included": "Impozite incluse.",
     "product_badge_sold_out": "Stoc epuizat",
     "product_badge_sale": "Promoție",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "grid_view": {
       "default_view": "Implicit",
       "grid_fieldset": "Grilă de coloane",

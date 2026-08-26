@@ -156,6 +156,7 @@
     "taxes_included": "Avgifter inkludert.",
     "product_badge_sold_out": "Utsolgt",
     "product_badge_sale": "Salg",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "search_input_label": "Søk",
     "search_input_placeholder": "Søk",
     "search_results": "Søkeresultater",

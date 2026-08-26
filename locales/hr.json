@@ -158,6 +158,7 @@
     "taxes_included": "Porezi su uključeni.",
     "product_badge_sold_out": "Rasprodano",
     "product_badge_sale": "Sniženje",
+    "product_badge_sale_percent": "{{ percent }}% off",
     "search_input_label": "Traži",
     "search_input_placeholder": "Pretraživanje",
     "search_results": "Rezultati pretraživanja",

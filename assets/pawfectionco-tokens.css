@@ -1,0 +1,461 @@
+/*
+ * Pawfectionco design system tokens + bespoke component styles.
+ * Layered on top of Horizon's base.css. Loaded after base.css, before the
+ * theme-styles-variables inline block (see snippets/stylesheets.liquid /
+ * layout/theme.liquid), so font-family overrides below use !important to win
+ * regardless of source order.
+ *
+ * Light mode only. No dark-mode / prefers-color-scheme rules.
+ */
+
+:root {
+  /* ---- Pawfectionco brand tokens (source of truth, do not derive new values) ---- */
+  --pc-ink-900: #151d12;
+  --pc-ink-700: #3c4738;
+  --pc-ink-500: #6f7c6a;
+  --pc-ink-300: #a5afa0;
+
+  --pc-surface-page: #faf6ec;
+  --pc-surface-raised: #fff;
+  --pc-surface-sunken: #f1ebdc;
+  --pc-surface-inverse: #151d12;
+
+  --pc-border-hairline: #e4ddcb;
+  --pc-border-strong: #151d12;
+
+  --pc-lime: #b4f04a;
+  --pc-lime-press: #a2dc2f;
+  --pc-lime-soft: #eefbd6;
+
+  --pc-grape: #7a3fc4;
+  --pc-grape-press: #682fae;
+  --pc-grape-soft: #f3ecfd;
+
+  --pc-urgent: #cf4b28;
+  --pc-urgent-soft: #fdeee9;
+  --pc-success: #2f8452;
+  --pc-star: #e8a12a;
+
+  --pc-r-sm: 8px;
+  --pc-r-md: 14px;
+  --pc-r-lg: 20px;
+  --pc-r-xl: 28px;
+  --pc-r-pill: 999px;
+
+  --pc-shadow-card: 0 1px 2px rgb(21 29 18 / 0.04), 0 8px 24px rgb(21 29 18 / 0.06);
+  --pc-shadow-lift: 0 2px 4px rgb(21 29 18 / 0.05), 0 16px 40px rgb(21 29 18 / 0.1);
+  --pc-shadow-sticky: 0 -2px 24px rgb(21 29 18 / 0.1);
+
+  --pc-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --pc-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --pc-t-fast: 160ms;
+  --pc-t-base: 240ms;
+
+  /* ---- Font family overrides ----
+     Horizon computes --font-h1..h6/--font-paragraph--family as var() chains
+     that resolve to --font-body/--font-subheading/--font-heading/--font-accent
+     --family. Overriding those four with !important is enough to repoint
+     every preset without racing theme-styles-variables' load order. */
+  --font-body--family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif !important;
+  --font-subheading--family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif !important;
+  --font-heading--family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif !important;
+  --font-accent--family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+/* ==========================================================================
+   Base surface / text color
+   ========================================================================== */
+body {
+  background: var(--pc-surface-page);
+}
+
+/* ==========================================================================
+   Buttons — pill, display font, weight 700
+   Horizon's .button / .button-secondary already read the palette + radius
+   settings we set in config/settings_data.json, so most of the visual
+   language comes free. These rules cover states the settings can't reach:
+   active-scale, focus-visible ring, loading, and the grape variant.
+   ========================================================================== */
+.button,
+.button-secondary,
+button.quick-add__button,
+.add-to-cart-button {
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+}
+
+:is(.button, .button-secondary, .quick-add__button, .add-to-cart-button):active {
+  scale: 0.97;
+}
+
+:is(.button, .button-secondary, .quick-add__button, .add-to-cart-button):focus-visible {
+  outline: 2px solid var(--pc-ink-900);
+  outline-offset: 2px;
+}
+
+/* Grape secondary-path button (subscribe / bundle / editorial CTAs).
+   Opt in with class="pc-button-grape" on a button block's custom classes,
+   or via .style_class = button-custom colored to grape in block settings. */
+.pc-button-grape {
+  background: var(--pc-grape) !important;
+  color: #fff !important;
+  border-color: var(--pc-grape) !important;
+}
+
+.pc-button-grape:hover {
+  background: var(--pc-grape-press) !important;
+  border-color: var(--pc-grape-press) !important;
+}
+
+/* Buy actions full-width on mobile */
+@media screen and (max-width: 749px) {
+  .product-form__buttons .button,
+  .quantity-and-buy-buttons,
+  .add-to-cart-button {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   Product badges — sale badge shows a % off figure, sold-out stays neutral
+   (colors are wired through settings_data.json badge_sale_* / badge_sold_out_*)
+   ========================================================================== */
+.product-badges__badge {
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   Quick add — must stay permanently visible on mobile (never hover-revealed).
+   Horizon's own mobile_quick_add setting already sets opacity/display via
+   --quick-add-mobile-opacity / --quick-add-mobile-display when enabled; this
+   just restyles the pill to brand and guarantees no mobile hover-gate exists.
+   ========================================================================== */
+@media screen and (max-width: 749px) {
+  button.quick-add__button {
+    opacity: var(--quick-add-mobile-opacity, 1) !important;
+  }
+}
+
+button.quick-add__button {
+  border-radius: var(--pc-r-pill);
+  border-color: var(--pc-ink-900);
+}
+
+/* ==========================================================================
+   Swatches — selection shown via ink ring, never color alone
+   ========================================================================== */
+.variant-option__button-label:has(input:checked) .swatch,
+input:checked ~ .swatch {
+  box-shadow: 0 0 0 2px var(--pc-surface-raised), 0 0 0 4px var(--pc-ink-900);
+}
+
+/* ==========================================================================
+   Urgency pill — built from Horizon's native product-inventory block
+   (real variant.inventory_quantity / inventory_management, threshold-gated).
+   Only the "low stock" state gets urgent styling; in-stock / out-of-stock
+   stay neutral so urgent color is never decorative.
+   ========================================================================== */
+.product-inventory {
+  display: inline-flex;
+}
+
+.product-inventory .product-inventory__status {
+  border-radius: var(--pc-r-pill);
+  padding: 6px 14px;
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.product-inventory:has(.product-inventory__icon-low) .product-inventory__status {
+  background: var(--pc-urgent-soft);
+  color: var(--pc-urgent);
+}
+
+.product-inventory:has(.product-inventory__icon-low) .product-inventory__icon-low {
+  color: var(--pc-urgent);
+}
+
+.product-inventory:has(.product-inventory__icon-in_stock) .product-inventory__status {
+  background: var(--pc-surface-sunken);
+  color: var(--pc-ink-700);
+}
+
+.product-inventory:has(.product-inventory__icon-out_of_stock) .product-inventory__status {
+  background: var(--pc-surface-sunken);
+  color: var(--pc-ink-500);
+}
+
+/* ==========================================================================
+   PDP reassurance row (shipping / returns) — built with native icon + text
+   blocks inside a group; this just gives the row its pill/label treatment.
+   ========================================================================== */
+.pc-reassurance-row {
+  border-top: 1px solid var(--pc-border-hairline);
+  border-bottom: 1px solid var(--pc-border-hairline);
+  padding-block: 16px;
+}
+
+.pc-reassurance-row .icon {
+  color: var(--pc-ink-700);
+}
+
+/* ==========================================================================
+   PDP breadcrumb + save badge
+   ========================================================================== */
+.pc-breadcrumb {
+  font-size: 13px;
+  color: var(--pc-ink-500);
+  margin: 0;
+}
+
+.pc-breadcrumb a {
+  color: var(--pc-ink-500);
+  text-decoration: none;
+}
+
+.pc-breadcrumb a:hover {
+  color: var(--pc-ink-900);
+  text-decoration: underline;
+}
+
+.pc-save-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--pc-lime-soft);
+  color: var(--pc-ink-900);
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 12px;
+  border-radius: var(--pc-r-pill);
+  padding: 4px 10px;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   Payment badge row
+   ========================================================================== */
+.payment-icons {
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   Sticky ATC bar restyle
+   ========================================================================== */
+.sticky-add-to-cart__bar {
+  background: var(--pc-surface-raised);
+  box-shadow: var(--pc-shadow-sticky);
+}
+
+.sticky-add-to-cart__bar::before {
+  display: none;
+}
+
+.sticky-add-to-cart__button {
+  border-radius: var(--pc-r-pill);
+}
+
+@media screen and (min-width: 750px) {
+  .sticky-add-to-cart__bar {
+    border-radius: var(--pc-r-lg);
+  }
+}
+
+/* Hide sticky bar while cart drawer is open */
+cart-drawer[open] ~ * .sticky-add-to-cart__bar,
+body:has(cart-drawer[open]) .sticky-add-to-cart__bar {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Trust bar (sections/pc-trust-bar.liquid)
+   ========================================================================== */
+.pc-trust-bar {
+  background: var(--pc-surface-sunken);
+}
+
+.pc-trust-bar__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  max-width: 1360px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+@media screen and (min-width: 750px) {
+  .pc-trust-bar__grid {
+    grid-template-columns: repeat(var(--pc-trust-count, 4), 1fr);
+    gap: 24px;
+    padding-inline: 40px;
+  }
+}
+
+.pc-trust-bar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  padding-block: 8px;
+}
+
+.pc-trust-bar__icon {
+  width: 28px;
+  height: 28px;
+  color: var(--pc-ink-900);
+}
+
+.pc-trust-bar__label {
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--pc-ink-900);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+
+/* ==========================================================================
+   Testimonials / UGC — horizontal scroll on mobile, one visible row
+   ========================================================================== */
+.pc-testimonials__track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-inline: 16px;
+  padding-block-end: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media screen and (min-width: 750px) {
+  .pc-testimonials__track {
+    padding-inline: 40px;
+    gap: 24px;
+  }
+}
+
+.pc-testimonial-card {
+  flex: 0 0 82%;
+  scroll-snap-align: start;
+  background: var(--pc-surface-raised);
+  border: 1px solid var(--pc-border-hairline);
+  border-radius: var(--pc-r-lg);
+  padding: 20px;
+  box-shadow: var(--pc-shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media screen and (min-width: 750px) {
+  .pc-testimonial-card {
+    flex-basis: 32%;
+  }
+}
+
+.pc-testimonial-card__stars {
+  display: flex;
+  gap: 2px;
+  color: var(--pc-star);
+}
+
+.pc-testimonial-card__stars svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.pc-testimonial-card__quote {
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--pc-ink-900);
+  margin: 0;
+}
+
+.pc-testimonial-card__author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.pc-testimonial-card__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--pc-surface-sunken);
+  flex-shrink: 0;
+}
+
+.pc-testimonial-card__author-name {
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--pc-ink-900);
+}
+
+.pc-testimonial-card__author-meta {
+  font-size: 13px;
+  color: var(--pc-ink-500);
+}
+
+/* ==========================================================================
+   Bundle / subscribe cards — grape-tinted, single combined ATC
+   ========================================================================== */
+.pc-bundle-card {
+  background: var(--pc-grape-soft);
+  border-radius: var(--pc-r-lg);
+  padding: 20px;
+}
+
+.pc-bundle-card__badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--pc-grape);
+  color: #fff;
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  border-radius: var(--pc-r-pill);
+  padding: 4px 10px;
+}
+
+/* ==========================================================================
+   Skeleton / shimmer loading state for product grids
+   ========================================================================== */
+@keyframes pc-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.pc-skeleton {
+  background: linear-gradient(90deg, var(--pc-surface-sunken) 25%, #e9e2cf 37%, var(--pc-surface-sunken) 63%);
+  background-size: 400% 100%;
+  animation: pc-shimmer 1.4s ease infinite;
+  border-radius: var(--pc-r-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pc-skeleton {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   Media wells — never shift layout
+   ========================================================================== */
+.product-grid__card .card-gallery,
+.product-grid__card :is(img, video) {
+  aspect-ratio: 4 / 5;
+}

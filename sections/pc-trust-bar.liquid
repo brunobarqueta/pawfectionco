@@ -1,0 +1,118 @@
+{% comment %}
+  Pawfectionco trust bar. A row of 3-4 merchant-editable reassurance items
+  (icon + short label) on a sunken background. Content lives entirely in
+  block settings so the merchant can swap real shipping/return/warranty
+  copy without touching code.
+{% endcomment %}
+
+<div
+  class="pc-trust-bar spacing-style"
+  style="
+    --pc-trust-count: {{ section.blocks.size }};
+    {% render 'spacing-style', settings: section.settings %}
+  "
+  {{ section.shopify_attributes }}
+>
+  <div class="pc-trust-bar__grid">
+    {%- for block in section.blocks -%}
+      {%- if block.type == '_pc-trust-item' -%}
+        <div
+          class="pc-trust-bar__item"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.icon != blank -%}
+            <span class="pc-trust-bar__icon svg-wrapper">
+              {{- block.settings.icon | inline_asset_content -}}
+            </span>
+          {%- endif -%}
+          <span class="pc-trust-bar__label">{{ block.settings.label | escape }}</span>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Trust bar",
+  "tag": "div",
+  "blocks": [
+    {
+      "type": "_pc-trust-item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "icon-checkmark.svg", "label": "Checkmark" },
+            { "value": "icon-available.svg", "label": "Shipping / truck" },
+            { "value": "icon-checkmark-burst.svg", "label": "Burst check" },
+            { "value": "icon-account.svg", "label": "Vet / person" }
+          ],
+          "default": "icon-checkmark.svg"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Free shipping"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust bar",
+      "category": "Pawfectionco",
+      "blocks": {
+        "item-1": {
+          "type": "_pc-trust-item",
+          "settings": { "icon": "icon-available.svg", "label": "Free shipping over $49" }
+        },
+        "item-2": {
+          "type": "_pc-trust-item",
+          "settings": { "icon": "icon-checkmark.svg", "label": "Crash-tested buckle" }
+        },
+        "item-3": {
+          "type": "_pc-trust-item",
+          "settings": { "icon": "icon-checkmark-burst.svg", "label": "30-day returns" }
+        },
+        "item-4": {
+          "type": "_pc-trust-item",
+          "settings": { "icon": "icon-account.svg", "label": "Vet-recommended fit" }
+        }
+      },
+      "block_order": ["item-1", "item-2", "item-3", "item-4"]
+    }
+  ]
+}
+{% endschema %}
