@@ -31,10 +31,11 @@
   <div class="pc-featured-collection__grid">
     {%- if collection != blank -%}
       {%- for product in collection.products limit: max_products -%}
-        {%- render 'pc-product-card', product: product, section_id: section.id -%}
+        {%- render 'pc-product-card', product: product -%}
       {%- endfor -%}
     {%- endif -%}
   </div>
+  <script src="{{ 'pc-quick-add.js' | asset_url }}" type="module"></script>
 </div>
 
 {% schema %}

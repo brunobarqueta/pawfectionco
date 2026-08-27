@@ -7,9 +7,10 @@
   numbers), price row with struck compare-at + real % discount badge, up to
   5 real color swatches + "+N" (only when the product actually has swatch
   data), and an in-flow full-width quick-add pill (not hover-revealed).
+  Quick-add always adds the default variant directly via a self-contained
+  button (assets/pc-quick-add.js) — no variant-picker modal.
 
   @param {object} product - The product to render.
-  @param {string} section_id - The rendering section's ID, passed through to quick-add.
 {%- enddoc -%}
 
 {%- liquid
@@ -34,8 +35,12 @@
   endfor
 -%}
 
-<article class="pc-product-card" data-product-id="{{ product.id }}">
-  <a href="{{ product.url }}" class="pc-product-card__media">
+<product-card class="pc-product-card" data-product-id="{{ product.id }}">
+  <a
+    href="{{ product.url }}"
+    class="pc-product-card__media"
+    ref="productCardLink"
+  >
     {%- if product.featured_image != blank -%}
       {{
         product.featured_image
@@ -96,7 +101,24 @@
     {%- endif -%}
 
     <div class="pc-card-quick-add">
-      {% render 'quick-add', product: product, section_id: section_id %}
+      <button
+        type="button"
+        class="pc-quick-add-button"
+        data-pc-quick-add
+        data-variant-id="{{ variant.id }}"
+        data-added-label="{{ 'actions.added' | t | default: 'Added' }}"
+        {% unless variant.available %}
+          disabled
+        {% endunless %}
+      >
+        <span class="pc-quick-add-button__label">
+          {%- if variant.available == false -%}
+            {{ 'content.product_badge_sold_out' | t }}
+          {%- else -%}
+            Quick add
+          {%- endif -%}
+        </span>
+      </button>
     </div>
   </div>
-</article>
+</product-card>

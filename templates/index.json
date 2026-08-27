@@ -6,8 +6,7 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */
-{
+ */{
   "sections": {
     "pc_hero_1": {
       "type": "pc-hero",
@@ -307,152 +306,14 @@
         "padding-block-end": 0
       }
     },
-    "email_signup_1": {
-      "type": "section",
-      "blocks": {
-        "heading_block": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<h2>Get 10% off your first order</h2>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "center",
-            "type_preset": "h3",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "text_color": "#151d12",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "subtext_block": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<p>One email a fortnight: new colours, restocks, and the occasional thing we learned about dogs.</p>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "center",
-            "type_preset": "paragraph",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "text_color": "#3c4738",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "email_signup_block": {
-          "type": "email-signup",
-          "settings": {
-            "width": "custom",
-            "custom_width": 100,
-            "heading": "",
-            "heading_text_color": "#151d12",
-            "heading_preset": "h3",
-            "border_style": "all",
-            "input_style": "default",
-            "border_width": 1,
-            "border_radius": 100,
-            "input_background_color": "",
-            "input_text_color": "",
-            "input_border_color": "",
-            "input_type_preset": "paragraph",
-            "style_class": "button-custom",
-            "custom_button_background": "#151d12",
-            "custom_button_text": "#faf6ec",
-            "custom_button_border": "#151d12",
-            "link_text_color": "",
-            "display_type": "text",
-            "label": "Get my code",
-            "integrated_button": false,
-            "button_type_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "microcopy_block": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<p>Unsubscribe in one tap. We never sell data.</p>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "center",
-            "type_preset": "caption",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "text_color": "#6f7c6a",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "heading_block",
-        "subtext_block",
-        "email_signup_block",
-        "microcopy_block"
-      ],
-      "name": "t:names.section",
+    "pc_email_signup_1": {
+      "type": "pc-email-signup",
+      "name": "Email signup",
       "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "center",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 16,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "#eefbd6",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 28,
+        "heading": "Get 10% off your first order",
+        "subheading": "One email a fortnight: new colours, restocks, and the occasional thing we learned about dogs.",
+        "button_text": "Get the code",
+        "microcopy": "Unsubscribe in one tap. We never sell data.",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
@@ -467,6 +328,6 @@
     "pc_bundle_1",
     "pc_reviews_1",
     "pc_editorial_1",
-    "email_signup_1"
+    "pc_email_signup_1"
   ]
 }

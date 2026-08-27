@@ -1,0 +1,132 @@
+{%- comment -%}
+  Pawfectionco email signup: lime-soft centered card, matching
+  Homepage.dc.html's "Get 10% off" section exactly. Built bespoke (rather
+  than restyling Horizon's generic section + email-signup block, which kept
+  drifting from the mockup like the other sections did) but still uses
+  Shopify's real `{% form 'customer' %}` — a genuine newsletter subscription,
+  with real error/success states.
+{%- endcomment -%}
+
+<div
+  class="pc-email-signup section section--page-width spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {{ section.shopify_attributes }}
+>
+  <div class="pc-email-signup__card">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="pc-email-signup__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.subheading != blank -%}
+      <p class="pc-email-signup__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    {%- form 'customer', class: 'pc-email-signup__form' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="pc-email-signup__row">
+        <label for="PcEmailSignup-{{ section.id }}" class="visually-hidden">
+          {{ 'blocks.email_signup.label' | t }}
+        </label>
+        <input
+          id="PcEmailSignup-{{ section.id }}"
+          class="pc-email-signup__input"
+          type="email"
+          name="contact[email]"
+          autocorrect="off"
+          autocapitalize="off"
+          autocomplete="email"
+          placeholder="you@example.com"
+          required
+          {%- if form.errors -%}
+            autofocus
+            aria-invalid="true"
+            aria-describedby="PcEmailSignup-error-{{ section.id }}"
+          {%- elsif form.posted_successfully? -%}
+            aria-describedby="PcEmailSignup-success-{{ section.id }}"
+          {%- endif -%}
+        >
+        <button type="submit" class="pc-email-signup__button">
+          {{- section.settings.button_text | escape -}}
+        </button>
+      </div>
+
+      {%- if form.errors -%}
+        <div id="PcEmailSignup-error-{{ section.id }}" class="pc-email-signup__message pc-email-signup__message--error" tabindex="-1">
+          {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+        </div>
+      {%- endif -%}
+
+      {%- if form.posted_successfully? -%}
+        <div id="PcEmailSignup-success-{{ section.id }}" class="pc-email-signup__message pc-email-signup__message--success" tabindex="-1">
+          {{ 'blocks.email_signup.success' | t }}
+        </div>
+      {%- endif -%}
+    {%- endform -%}
+
+    {%- if section.settings.microcopy != blank -%}
+      <span class="pc-email-signup__microcopy">{{ section.settings.microcopy | escape }}</span>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Email signup",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get 10% off your first order"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "One email a fortnight: new colours, restocks, and the occasional thing we learned about dogs."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button label",
+      "default": "Get the code"
+    },
+    {
+      "type": "text",
+      "id": "microcopy",
+      "label": "Microcopy",
+      "default": "Unsubscribe in one tap. We never sell data."
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Email signup",
+      "category": "Pawfectionco"
+    }
+  ]
+}
+{% endschema %}

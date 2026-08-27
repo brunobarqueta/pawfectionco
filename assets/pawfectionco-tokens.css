@@ -187,11 +187,16 @@ button.quick-add__button,
   padding-top: 4px;
 }
 
+.pc-card-quick-add {
+  position: relative;
+}
+
 .pc-card-quick-add .quick-add {
-  position: static;
-  inset: auto;
-  pointer-events: auto;
-  width: 100%;
+  position: static !important;
+  inset: auto !important;
+  pointer-events: auto !important;
+  width: 100% !important;
+  z-index: 1;
 }
 
 .pc-card-quick-add .quick-add__product-form-component,
@@ -236,6 +241,63 @@ button.quick-add__button,
   flex-shrink: 0;
   width: 18px;
   height: 18px;
+}
+
+/* ==========================================================================
+   Featured-collection quick add (snippets/pc-product-card.liquid,
+   assets/pc-quick-add.js) — a self-contained button we fully own, not
+   Horizon's quick-add-component. Always adds the default variant directly
+   (no "Choose" modal branch for multi-option products), full width,
+   in-flow, permanently visible.
+   ========================================================================== */
+.pc-quick-add-button {
+  display: flex;
+  width: 100%;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--pc-r-pill);
+  border: 1.5px solid var(--pc-ink-900);
+  background: transparent;
+  color: var(--pc-ink-900);
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background var(--pc-t-fast) var(--pc-ease-out), color var(--pc-t-fast) var(--pc-ease-out),
+    border-color var(--pc-t-fast) var(--pc-ease-out), transform 90ms;
+}
+
+.pc-quick-add-button:hover:not(:disabled) {
+  background: var(--pc-lime);
+  border-color: var(--pc-lime);
+}
+
+.pc-quick-add-button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.pc-quick-add-button:focus-visible {
+  outline: 2px solid var(--pc-ink-900);
+  outline-offset: 2px;
+}
+
+.pc-quick-add-button:disabled {
+  border-color: var(--pc-border-hairline);
+  background: var(--pc-surface-sunken);
+  color: var(--pc-ink-300);
+  cursor: not-allowed;
+}
+
+.pc-quick-add-button.is-loading {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.pc-quick-add-button.is-added {
+  border-color: var(--pc-success);
+  background: var(--pc-lime-soft);
+  color: var(--pc-ink-900);
 }
 
 /* Other reuses of the shared overlay quick-add (featured product, hotspots):
@@ -1372,4 +1434,106 @@ body:has(cart-drawer[open]) .sticky-add-to-cart__bar {
   font-size: 12px;
   color: var(--pc-ink-500);
   font-weight: 700;
+}
+
+/* ==========================================================================
+   Email signup (sections/pc-email-signup.liquid)
+   ========================================================================== */
+.pc-email-signup__card {
+  background: var(--pc-lime-soft);
+  border-radius: var(--pc-r-xl);
+  padding: clamp(28px, 4vw, 48px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  text-align: center;
+}
+
+.pc-email-signup__heading {
+  margin: 0;
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: clamp(26px, 3.4vw, 38px);
+  letter-spacing: -0.022em;
+}
+
+.pc-email-signup__subheading {
+  margin: 0;
+  max-width: 460px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--pc-ink-700);
+}
+
+.pc-email-signup__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.pc-email-signup__row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 480px;
+}
+
+.pc-email-signup__input {
+  flex: 1;
+  min-width: 200px;
+  height: 56px;
+  padding: 0 18px;
+  border: 1px solid var(--pc-ink-900);
+  border-radius: var(--pc-r-md);
+  background: var(--pc-surface-raised);
+  font-family: var(--font-body--family);
+  font-size: 16px;
+  color: var(--pc-ink-900);
+}
+
+.pc-email-signup__input:focus-visible {
+  outline: 2px solid var(--pc-ink-900);
+  outline-offset: 2px;
+}
+
+.pc-email-signup__button {
+  height: 56px;
+  padding: 0 28px;
+  border: none;
+  border-radius: var(--pc-r-pill);
+  background: var(--pc-ink-900);
+  color: var(--pc-surface-page);
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  flex: none;
+  transition: background var(--pc-t-fast) var(--pc-ease-out);
+}
+
+.pc-email-signup__button:hover {
+  background: #26301f;
+}
+
+.pc-email-signup__microcopy {
+  font-size: 13px;
+  color: var(--pc-ink-500);
+}
+
+.pc-email-signup__message {
+  font-size: 14px;
+  max-width: 480px;
+}
+
+.pc-email-signup__message--error {
+  color: var(--pc-urgent);
+}
+
+.pc-email-signup__message--success {
+  color: var(--pc-success);
 }
