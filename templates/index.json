@@ -97,7 +97,7 @@
         "cat-1": {
           "type": "pc-category-tile",
           "settings": {
-            "collection": "",
+            "collection": "car-travel",
             "title": "Car & travel",
             "subtext": "Belts, boosters, hammocks and bowls for dogs who ride shotgun.",
             "count_fallback": "9 products"
@@ -106,7 +106,7 @@
         "cat-2": {
           "type": "pc-category-tile",
           "settings": {
-            "collection": "gid://shopify/collection/313930416170",
+            "collection": "bath-groom",
             "title": "Bath & groom",
             "subtext": "Shower heads, brushes and towels that make bath night shorter.",
             "count_fallback": "11 products"
@@ -115,7 +115,7 @@
         "cat-3": {
           "type": "pc-category-tile",
           "settings": {
-            "collection": "gid://shopify/collection/313930448938",
+            "collection": "play",
             "title": "Play",
             "subtext": "Chew toys and puzzles tested against actual destroyers.",
             "count_fallback": "8 products"
@@ -324,7 +324,7 @@
       },
       "name": "t:names.product_list",
       "settings": {
-        "collection": "gid://shopify/collection/313930481706",
+        "collection": "best-sellers",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 8,
