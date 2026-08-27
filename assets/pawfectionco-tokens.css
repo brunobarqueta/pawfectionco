@@ -1911,3 +1911,387 @@ body:has(cart-drawer[open]) .sticky-add-to-cart__bar {
 .add-to-cart-icon {
   display: none;
 }
+
+/* ==========================================================================
+   Collection page — restyles Horizon's real facets/filtering system
+   (sections/main-collection.liquid, blocks/filters.liquid) to match the
+   design system rather than replacing it; filtering, URL params,
+   pagination and accessibility all stay Shopify's real, working
+   implementation. Product cards reuse the same pc-product-card component
+   as the homepage via the _pc-recommendation-card block (see
+   templates/collection.json).
+   ========================================================================== */
+
+/* Collection heading block already reuses .pc-breadcrumb from the PDP. */
+
+/* Filter group headers ("Price", "Availability", ...) get the micro-label
+   treatment; the caret is hidden since vertical style keeps groups always
+   open, matching the mockup's non-collapsible rail. */
+.facets--vertical .facets__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--pc-ink-500);
+  cursor: default;
+}
+
+.facets--vertical .facets__summary {
+  cursor: default;
+  padding-bottom: 11px;
+  border-bottom: 1px solid var(--pc-border-hairline);
+  margin-bottom: 11px;
+}
+
+.facets--vertical .facets__summary .icon-caret {
+  display: none;
+}
+
+.facets--vertical .facets__panel {
+  border-bottom: 1px solid var(--pc-border-hairline);
+  padding-bottom: 20px;
+  margin-bottom: 22px;
+}
+
+.facets--vertical .facets__item:last-of-type .facets__panel {
+  border-bottom: none;
+}
+
+/* Filter value rows: checkbox + label + real product count, matching the
+   mockup's "44px row, label flex-1, count right-aligned" layout. */
+.pc-facet-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 44px;
+}
+
+.pc-facet-row .checkbox {
+  flex: none;
+}
+
+.pc-facet-row .checkbox__label {
+  flex: 1;
+  min-width: 0;
+}
+
+.pc-facet-row .checkbox__label-text {
+  font-size: 15px;
+  color: var(--pc-ink-900);
+}
+
+.pc-facet-count {
+  font-size: 13px;
+  color: var(--pc-ink-500);
+  font-variant-numeric: tabular-nums;
+  flex: none;
+}
+
+.checkbox__input {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--pc-r-sm);
+  border: 1.5px solid var(--pc-border-hairline);
+  background: var(--pc-surface-raised);
+  appearance: none;
+  cursor: pointer;
+}
+
+.checkbox__input:checked {
+  border-color: var(--pc-ink-900);
+  background: var(--pc-lime);
+}
+
+.checkbox__label svg {
+  color: var(--pc-ink-900);
+}
+
+/* Sort select — pill, matching the mockup's rounded dropdown. */
+.sorting-filter select,
+select[name='sort_by'] {
+  height: 44px;
+  padding-inline: 14px;
+  border: 1.5px solid var(--pc-border-hairline);
+  border-radius: var(--pc-r-pill);
+  background: var(--pc-surface-raised);
+  font-family: var(--font-body--family);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--pc-ink-900);
+  cursor: pointer;
+}
+
+/* Active filter chips + clear all */
+.pills__pill.facets-remove__pill {
+  height: 36px;
+  padding-inline: 13px 8px;
+  border-radius: var(--pc-r-pill);
+  background: var(--pc-surface-sunken);
+  font-family: var(--font-body--family);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--pc-ink-900);
+}
+
+.pills__pill.facets-remove__pill:hover {
+  background: var(--pc-border-hairline);
+}
+
+.facets__clear-all-link {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--pc-ink-700);
+}
+
+/* Product count text */
+.products-count-wrapper {
+  font-size: 15px;
+  color: var(--pc-ink-700);
+}
+
+/* Grid: match the design system's card sizing on the collection page too. */
+.product-grid {
+  grid-template-columns: repeat(auto-fill, minmax(216px, 1fr)) !important;
+  gap: 16px !important;
+}
+
+/* ==========================================================================
+   Cart drawer (snippets/cart-drawer.liquid, cart-products.liquid,
+   cart-summary.liquid, pc-cart-progress.liquid, pc-cart-upsell.liquid) —
+   real Horizon cart functionality (AJAX line updates, note, discount,
+   checkout), restyled to match the design system rather than rebuilt.
+   ========================================================================== */
+
+/* Free shipping progress bar */
+.pc-cart-progress {
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: none;
+  background: var(--pc-lime-soft);
+}
+
+.pc-cart-progress--unlocked {
+  background: #d9f0e2;
+}
+
+.pc-cart-progress__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.pc-cart-progress__label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--pc-ink-900);
+}
+
+.pc-cart-progress__tag {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--pc-ink-700);
+}
+
+.pc-cart-progress--unlocked .pc-cart-progress__tag {
+  color: var(--pc-success);
+}
+
+.pc-cart-progress__track {
+  height: 8px;
+  border-radius: var(--pc-r-pill);
+  background: rgb(21 29 18 / 0.1);
+  overflow: hidden;
+}
+
+.pc-cart-progress__fill {
+  height: 100%;
+  border-radius: var(--pc-r-pill);
+  background: var(--pc-ink-900);
+  transition: width var(--pc-t-base) var(--pc-ease-out);
+}
+
+.pc-cart-progress--unlocked .pc-cart-progress__fill {
+  background: var(--pc-success);
+}
+
+/* Low stock line under a cart line item */
+.pc-cart-low-stock {
+  margin: 4px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--pc-urgent);
+}
+
+/* Cross-sell strip */
+.pc-cart-upsell {
+  padding: 14px 18px;
+  background: var(--pc-grape-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  flex: none;
+}
+
+.pc-cart-upsell__eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--pc-grape);
+}
+
+.pc-cart-upsell__item {
+  display: flex;
+  gap: 11px;
+  align-items: center;
+}
+
+.pc-cart-upsell__media {
+  width: 48px;
+  height: 48px;
+  flex: none;
+  border-radius: var(--pc-r-md);
+  background: var(--pc-surface-raised);
+  overflow: hidden;
+}
+
+.pc-cart-upsell__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pc-cart-upsell__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pc-cart-upsell__title {
+  font-weight: 700;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--pc-ink-900);
+}
+
+.pc-cart-upsell__price {
+  font-size: 13px;
+  color: var(--pc-ink-700);
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-cart-upsell .pc-quick-add-button,
+.pc-cart-upsell__add {
+  flex: none;
+  width: auto;
+  height: 44px;
+  padding-inline: 18px;
+  background: var(--pc-grape);
+  border-color: var(--pc-grape);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--pc-r-pill);
+  border: none;
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.pc-cart-upsell__add:hover:not(:disabled) {
+  background: var(--pc-grape-press);
+}
+
+/* Line items */
+.cart-items__media-image {
+  border-radius: var(--pc-r-md);
+}
+
+.cart-items__title {
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--pc-ink-900);
+}
+
+.cart-items__remove {
+  color: var(--pc-ink-500);
+}
+
+.cart-items__remove:hover {
+  color: var(--pc-urgent);
+}
+
+/* Cart note toggle */
+.cart-note__summary {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--pc-ink-700);
+}
+
+.cart-note__instructions {
+  border: 1px solid var(--pc-border-hairline);
+  border-radius: var(--pc-r-md);
+  background: var(--pc-surface-sunken);
+  font-family: var(--font-body--family);
+  font-size: 15px;
+  color: var(--pc-ink-900);
+}
+
+.cart-note__instructions:focus-visible {
+  outline: 2px solid var(--pc-ink-900);
+  outline-offset: 2px;
+  border-color: var(--pc-ink-900);
+  background: var(--pc-surface-raised);
+}
+
+/* Summary / checkout */
+.cart-totals__total-value {
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: 24px;
+}
+
+.cart__checkout-button {
+  height: 56px;
+  border-radius: var(--pc-r-pill);
+  background: var(--pc-lime);
+  color: var(--pc-ink-900);
+  border: none;
+}
+
+.cart__checkout-button:hover {
+  background: var(--pc-lime-press);
+}
+
+.pc-cart-payments {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pc-cart-payments__icon {
+  height: 24px;
+  width: auto;
+  border-radius: 6px;
+}
+
+/* Empty state */
+.cart-items__empty-button {
+  background: var(--pc-lime);
+  color: var(--pc-ink-900);
+  border-radius: var(--pc-r-pill);
+  border: none;
+  height: 48px;
+}
+
+.cart-items__empty-button:hover {
+  background: var(--pc-lime-press);
+}

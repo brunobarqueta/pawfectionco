@@ -285,6 +285,14 @@
   {% endif %}
 </div>
 
+{%- if shop.enabled_payment_types.size > 0 -%}
+  <div class="pc-cart-payments">
+    {%- for type in shop.enabled_payment_types -%}
+      {{ type | payment_type_svg_tag: class: 'pc-cart-payments__icon' }}
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
 {% stylesheet %}
   .cart-actions {
     display: flex;

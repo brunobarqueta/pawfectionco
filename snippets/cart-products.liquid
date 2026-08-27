@@ -296,6 +296,10 @@
                     {%- endif -%}
                   </div>
 
+                  {%- if item.variant.inventory_management == 'shopify' and item.variant.inventory_policy == 'deny' and item.variant.inventory_quantity > 0 and item.variant.inventory_quantity <= 10 -%}
+                    <p class="pc-cart-low-stock">Only {{ item.variant.inventory_quantity }} left</p>
+                  {%- endif -%}
+
                   <div class="cart-items__unit-price-wrapper">
                     <div>
                       {% if item.original_price != item.final_price %}

@@ -1,0 +1,32 @@
+{%- doc -%}
+  One row in the cart drawer's cross-sell strip.
+  @param {object} product - The product to render.
+{%- enddoc -%}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+-%}
+
+<div class="pc-cart-upsell__item">
+  <div class="pc-cart-upsell__media">
+    {%- if product.featured_image != blank -%}
+      {{ product.featured_image | image_url: width: 96 | image_tag: width: 48, height: 48, alt: '' }}
+    {%- endif -%}
+  </div>
+  <div class="pc-cart-upsell__info">
+    <div class="pc-cart-upsell__title">{{ product.title }}</div>
+    <div class="pc-cart-upsell__price">{{ variant.price | money }}</div>
+  </div>
+  <button
+    type="button"
+    class="pc-cart-upsell__add"
+    data-pc-quick-add
+    data-variant-id="{{ variant.id }}"
+    data-added-label="{{ 'actions.added' | t | default: 'Added' }}"
+    {% unless variant.available %}
+      disabled
+    {% endunless %}
+  >
+    <span class="pc-quick-add-button__label">Add</span>
+  </button>
+</div>

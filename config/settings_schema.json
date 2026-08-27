@@ -1527,6 +1527,31 @@
       },
       {
         "type": "header",
+        "content": "Pawfectionco cart drawer"
+      },
+      {
+        "type": "range",
+        "id": "cart_free_shipping_threshold",
+        "label": "Free shipping progress bar threshold",
+        "info": "Set to 0 to hide the progress bar entirely.",
+        "min": 0,
+        "max": 200,
+        "step": 5,
+        "unit": "$",
+        "default": 75
+      },
+      {
+        "type": "product",
+        "id": "cart_upsell_product_1",
+        "label": "Cart upsell product 1"
+      },
+      {
+        "type": "product",
+        "id": "cart_upsell_product_2",
+        "label": "Cart upsell product 2"
+      },
+      {
+        "type": "header",
         "content": "t:content.cart_features"
       },
       {

@@ -1,0 +1,53 @@
+{%- doc -%}
+  Pawfectionco cart drawer cross-sell: up to 2 merchant-picked products
+  (settings.cart_upsell_product_1/2), hidden once the cart has 4+ lines or
+  a product is already in the cart. Real add via the same self-contained
+  quick-add button/JS as the homepage (assets/pc-quick-add.js) — no fake
+  "Add" button that does nothing.
+{%- enddoc -%}
+
+{%- liquid
+  assign show_p1 = false
+  assign show_p2 = false
+
+  if cart.item_count > 0 and cart.item_count < 4
+    if settings.cart_upsell_product_1 != blank
+      assign in_cart_1 = false
+      for line in cart.items
+        if line.product_id == settings.cart_upsell_product_1.id
+          assign in_cart_1 = true
+        endif
+      endfor
+      unless in_cart_1
+        assign show_p1 = true
+      endunless
+    endif
+
+    if settings.cart_upsell_product_2 != blank
+      assign in_cart_2 = false
+      for line in cart.items
+        if line.product_id == settings.cart_upsell_product_2.id
+          assign in_cart_2 = true
+        endif
+      endfor
+      unless in_cart_2
+        assign show_p2 = true
+      endunless
+    endif
+  endif
+-%}
+
+{%- if show_p1 or show_p2 -%}
+  <div class="pc-cart-upsell">
+    <span class="pc-cart-upsell__eyebrow">Goes well with</span>
+
+    {%- if show_p1 -%}
+      {%- render 'pc-cart-upsell-item', product: settings.cart_upsell_product_1 -%}
+    {%- endif -%}
+
+    {%- if show_p2 -%}
+      {%- render 'pc-cart-upsell-item', product: settings.cart_upsell_product_2 -%}
+    {%- endif -%}
+  </div>
+  <script src="{{ 'pc-quick-add.js' | asset_url }}" type="module"></script>
+{%- endif -%}

@@ -368,16 +368,19 @@
                       </label>
                     </div>
                   {% else %}
-                    {% render 'checkbox',
-                      name: value.param_name,
-                      value: value.value,
-                      label: value.label,
-                      checked: value.active,
-                      id: input_id,
-                      disabled: is_disabled,
-                      inputRef: 'facetInputs[]',
-                      events: 'on:pointerenter="/prefetchPage" on:pointerleave="/cancelPrefetchPage" on:pointerdown="/prefetchPageImmediate"'
-                    %}
+                    <div class="pc-facet-row">
+                      {% render 'checkbox',
+                        name: value.param_name,
+                        value: value.value,
+                        label: value.label,
+                        checked: value.active,
+                        id: input_id,
+                        disabled: is_disabled,
+                        inputRef: 'facetInputs[]',
+                        events: 'on:pointerenter="/prefetchPage" on:pointerleave="/cancelPrefetchPage" on:pointerdown="/prefetchPageImmediate"'
+                      %}
+                      <span class="pc-facet-count">{{ value.count }}</span>
+                    </div>
                   {% endif %}
                 {% endif %}
               </li>
