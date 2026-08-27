@@ -69,6 +69,45 @@
 }
 
 /* ==========================================================================
+   Font hard override — direct selectors, not just the custom-property chain
+   above. Horizon derives --font-h1--family etc. from --font-heading--family
+   via var() at the point of use, which should already inherit our override,
+   but forcing font-family directly on the real elements too is cheap
+   insurance against any place that bypasses that chain (inline
+   --font-family on a specific element, a component with its own font
+   custom property, etc.) — belt and suspenders so brand fonts are
+   guaranteed to render everywhere, not just "in theory."
+   ========================================================================== */
+:is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6),
+button,
+.button,
+.button-secondary,
+.header-logo,
+[class*='price'],
+.product-badges__badge {
+  font-family: var(--font-accent--family) !important;
+}
+
+body,
+p,
+input,
+textarea,
+select,
+label {
+  font-family: var(--font-body--family) !important;
+}
+
+/* The header wordmark falls back to shop.name as plain text when no logo
+   image is set (blocks/_header-logo.liquid); it hardcodes body-weight 600
+   at the default md size via an inline style, which reads too small/thin
+   next to the mockup's 21px/900/-0.025em display wordmark. */
+.header-logo {
+  --font-weight: 900 !important;
+  font-size: 21px !important;
+  letter-spacing: -0.025em;
+}
+
+/* ==========================================================================
    Base surface / text color
    ========================================================================== */
 body {
@@ -466,18 +505,23 @@ body:has(cart-drawer[open]) .sticky-add-to-cart__bar {
 }
 
 .pc-category-tile__media {
-  aspect-ratio: 16 / 11;
+  /* Fixed height, not aspect-ratio: with mixed source-image ratios,
+     aspect-ratio let each card size itself off its own image, so tiles came
+     out different heights. A fixed height + object-fit: cover on the image
+     guarantees every tile matches regardless of the source image's ratio. */
+  height: clamp(180px, 24vw, 260px);
   background: var(--pc-surface-sunken);
   background-image: repeating-linear-gradient(135deg, #e9e1cd 0 10px, #f1ebdc 10px 20px);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .pc-category-tile__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
 }
 
 .pc-category-tile__placeholder {
@@ -853,10 +897,13 @@ body:has(cart-drawer[open]) .sticky-add-to-cart__bar {
 }
 
 .pc-editorial-card__media {
-  aspect-ratio: 16 / 10;
+  /* Fixed height instead of aspect-ratio — see the matching comment on
+     .pc-category-tile__media above; same fix, same reason. */
+  height: clamp(200px, 22vw, 320px);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .pc-editorial-card--dark .pc-editorial-card__media {
@@ -870,9 +917,9 @@ body:has(cart-drawer[open]) .sticky-add-to-cart__bar {
 }
 
 .pc-editorial-card__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
 }
 
 .pc-editorial-card__placeholder {
@@ -1038,17 +1085,32 @@ body:has(cart-drawer[open]) .sticky-add-to-cart__bar {
    covers the dismiss control's position and the sticky header's z-index.
    ========================================================================== */
 .announcement-bar {
-  position: relative;
+  overflow: hidden;
+  transition: max-height var(--pc-t-base) var(--pc-ease-out), opacity var(--pc-t-fast) linear,
+    padding-block var(--pc-t-base) var(--pc-ease-out);
+}
+
+.pc-announcement-simple {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.pc-announcement-simple__text {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pc-announcement-simple__text .announcement-bar__text {
+  margin: 0;
 }
 
 .pc-announcement-dismiss {
-  position: absolute;
-  top: 50%;
-  right: 16px;
-  transform: translateY(-50%);
+  flex: none;
   width: 28px;
   height: 28px;
-  flex: none;
   border: none;
   border-radius: var(--pc-r-pill);
   background: transparent;
@@ -1125,4 +1187,189 @@ body:has(cart-drawer[open]) .sticky-add-to-cart__bar {
 .product-grid__card .card-gallery,
 .product-grid__card :is(img, video) {
   aspect-ratio: 4 / 5;
+}
+
+/* ==========================================================================
+   Featured collection grid (sections/pc-featured-collection.liquid,
+   snippets/pc-product-card.liquid) — bespoke, built to the design system's
+   product-card contract exactly rather than through Horizon's generic card.
+   ========================================================================== */
+.pc-featured-collection__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.pc-featured-collection__heading {
+  margin: 0;
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: clamp(26px, 3.6vw, 38px);
+  letter-spacing: -0.02em;
+}
+
+.pc-featured-collection__subheading {
+  margin: 0 0 20px;
+  max-width: 620px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--pc-ink-700);
+}
+
+.pc-featured-collection__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  gap: 16px;
+}
+
+.pc-product-card {
+  background: var(--pc-surface-raised);
+  border-radius: var(--pc-r-lg);
+  overflow: hidden;
+  box-shadow: var(--pc-shadow-card);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--pc-t-fast) var(--pc-ease-out), box-shadow var(--pc-t-fast) var(--pc-ease-out);
+}
+
+.pc-product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--pc-shadow-lift);
+}
+
+.pc-product-card__media {
+  position: relative;
+  display: block;
+  /* Fixed height + object-fit: cover, not aspect-ratio — mixed source-image
+     ratios made aspect-ratio-based wells size inconsistently card to card. */
+  height: clamp(220px, 26vw, 300px);
+  background: var(--pc-surface-sunken);
+  background-image: repeating-linear-gradient(135deg, #e9e1cd 0 8px, #f1ebdc 8px 16px);
+  overflow: hidden;
+}
+
+.pc-product-card__image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.pc-product-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-family: var(--font-accent--family);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  background: var(--pc-ink-900);
+  color: var(--pc-surface-page);
+  padding: 6px 10px;
+  border-radius: var(--pc-r-pill);
+}
+
+.pc-product-card__badge--neutral {
+  background: var(--pc-ink-300);
+}
+
+.pc-product-card__body {
+  padding: 14px 15px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  flex: 1;
+}
+
+.pc-product-card__title {
+  margin: 0;
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pc-product-card__title a {
+  color: var(--pc-ink-900);
+}
+
+.pc-product-card__rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--pc-ink-700);
+}
+
+.pc-product-card__rating [aria-hidden] {
+  color: var(--pc-star);
+  letter-spacing: 1px;
+}
+
+.pc-product-card__rating-value {
+  font-weight: 700;
+}
+
+.pc-product-card__rating-count {
+  color: var(--pc-ink-500);
+}
+
+.pc-product-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pc-product-card__price-now {
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-product-card__price-was {
+  font-size: 14px;
+  color: var(--pc-ink-500);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-product-card__price-off {
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--pc-lime-soft);
+  color: var(--pc-ink-900);
+  padding: 4px 8px;
+  border-radius: var(--pc-r-pill);
+}
+
+.pc-product-card__swatches {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.pc-product-card__swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--pc-r-pill);
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 0 1px var(--pc-border-hairline);
+}
+
+.pc-product-card__swatch-more {
+  font-size: 12px;
+  color: var(--pc-ink-500);
+  font-weight: 700;
 }

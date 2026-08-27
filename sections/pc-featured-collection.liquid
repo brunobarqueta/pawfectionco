@@ -1,0 +1,103 @@
+{%- comment -%}
+  Pawfectionco featured collection grid: bespoke product-card grid built to
+  match the Homepage.dc.html "best sellers" spec exactly (fixed-ratio media,
+  top-left badge, 2-line title, guarded rating row, price + compare-at +
+  discount badge, real color swatches when the store has them, in-flow
+  quick-add pill). Replaces Horizon's generic `product-list` section, whose
+  deeply parameterized card system kept drifting from the mockup (mixed
+  image ratios, wrong gap/radius, floating quick-add) even after several
+  rounds of settings tweaks.
+{%- endcomment -%}
+
+{%- liquid
+  assign collection = section.settings.collection
+  assign max_products = section.settings.max_products | default: 8
+-%}
+
+<div
+  class="pc-featured-collection section section--page-width spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {{ section.shopify_attributes }}
+>
+  <div class="pc-featured-collection__header">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="pc-featured-collection__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+  </div>
+  {%- if section.settings.subheading != blank -%}
+    <p class="pc-featured-collection__subheading">{{ section.settings.subheading }}</p>
+  {%- endif -%}
+
+  <div class="pc-featured-collection__grid">
+    {%- if collection != blank -%}
+      {%- for product in collection.products limit: max_products -%}
+        {%- render 'pc-product-card', product: product, section_id: section.id -%}
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What owners buy first"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Ranked by repeat purchases, not by margin. Quick-add works without leaving this page."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection",
+      "category": "Pawfectionco"
+    }
+  ]
+}
+{% endschema %}

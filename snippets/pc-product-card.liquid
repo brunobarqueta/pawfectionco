@@ -1,0 +1,102 @@
+{%- doc -%}
+  Pawfectionco product card — matches the design system contract exactly:
+  4:5 media well (fixed ratio, object-fit cover — never "adapt" per-image
+  sizing), badge top-left, 2-line title clamp, rating row (only rendered
+  when the product has real review metafield data — no review app is
+  installed, so this simply doesn't render rather than showing fake
+  numbers), price row with struck compare-at + real % discount badge, up to
+  5 real color swatches + "+N" (only when the product actually has swatch
+  data), and an in-flow full-width quick-add pill (not hover-revealed).
+
+  @param {object} product - The product to render.
+  @param {string} section_id - The rendering section's ID, passed through to quick-add.
+{%- enddoc -%}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign compare_at = variant.compare_at_price
+  assign price = variant.price
+  assign discount_percent = 0
+  if compare_at > price
+    assign discount_percent = compare_at | minus: price | times: 100.0 | divided_by: compare_at | round
+  endif
+
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value
+
+  assign swatch_option = null
+  for option in product.options_with_values
+    assign first_value = option.values.first
+    if first_value.swatch != blank
+      assign swatch_option = option
+      break
+    endif
+  endfor
+-%}
+
+<article class="pc-product-card" data-product-id="{{ product.id }}">
+  <a href="{{ product.url }}" class="pc-product-card__media">
+    {%- if product.featured_image != blank -%}
+      {{
+        product.featured_image
+        | image_url: width: 600
+        | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 25vw, 50vw', widths: '300,450,600', class: 'pc-product-card__image'
+      }}
+    {%- endif -%}
+    {%- if product.available == false -%}
+      <span class="pc-product-card__badge pc-product-card__badge--neutral">{{ 'content.product_badge_sold_out' | t }}</span>
+    {%- elsif discount_percent > 0 -%}
+      <span class="pc-product-card__badge">{{ 'content.product_badge_sale_percent' | t: percent: discount_percent }}</span>
+    {%- endif -%}
+  </a>
+
+  <div class="pc-product-card__body">
+    <h3 class="pc-product-card__title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+
+    {%- if rating > 0 -%}
+      <div
+        class="pc-product-card__rating"
+        role="img"
+        aria-label="{{ rating }} out of 5 stars{% if rating_count %}, {{ rating_count }} reviews{% endif %}"
+      >
+        <span aria-hidden="true">
+          {%- for i in (1..5) -%}★{%- endfor -%}
+        </span>
+        <span class="pc-product-card__rating-value">{{ rating }}</span>
+        {%- if rating_count -%}
+          <span class="pc-product-card__rating-count">({{ rating_count }})</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="pc-product-card__price">
+      <span class="pc-product-card__price-now">{{ price | money }}</span>
+      {%- if compare_at > price -%}
+        <span class="pc-product-card__price-was">{{ compare_at | money }}</span>
+        <span class="pc-product-card__price-off">−{{ discount_percent }}%</span>
+      {%- endif -%}
+    </div>
+
+    {%- if swatch_option != null -%}
+      <div class="pc-product-card__swatches">
+        {%- for value in swatch_option.values limit: 5 -%}
+          <span
+            class="pc-product-card__swatch"
+            style="background: {% if value.swatch.color %}{{ value.swatch.color }}{% else %}url({{ value.swatch.image | image_url: width: 40 }}){% endif %};"
+            aria-label="{{ value }}"
+          ></span>
+        {%- endfor -%}
+        {%- assign swatch_overflow = swatch_option.values.size | minus: 5 -%}
+        {%- if swatch_overflow > 0 -%}
+          <span class="pc-product-card__swatch-more">+{{ swatch_overflow }}</span>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="pc-card-quick-add">
+      {% render 'quick-add', product: product, section_id: section_id %}
+    </div>
+  </div>
+</article>

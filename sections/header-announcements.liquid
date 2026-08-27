@@ -15,43 +15,47 @@
   class="announcement-bar spacing-style section section--{{ section.settings.section_width }} color-custom-{{ section.id }}"
   style="{% render 'spacing-padding', settings: section.settings %}; --border-bottom-width: {{ section.settings.divider_width }}px;{% if section.settings.divider_color != blank %} --color-border: {{ section.settings.divider_color }};{% endif %}"
 >
-  {% liquid
-    assign autoplay = false
-    assign show_arrows = false
-    if section.blocks.size > 1
-      assign autoplay = true
-      assign show_arrows = true
-    endif
-  %}
-
-  <announcement-bar-component
-    class="announcement-bar__slider"
-    {% if autoplay == true %}
-      autoplay="{{ section.settings.speed }}" aria-live="polite"
-    {% endif %}
-  >
-    {% if show_arrows %}
-      {% render 'slideshow-arrows', icon_style: 'chevron' %}
-    {% endif %}
-
-    <div class="announcement-bar__slides">
-      {% content_for 'blocks' %}
-    </div>
-  </announcement-bar-component>
-
+  {%- comment -%}
+    A section can only call `content_for 'blocks'` once, so the two layouts
+    (simple centered row for a single announcement vs. Horizon's slider for
+    several) share one call site below — only the wrapper markup differs,
+    via the class + these conditionally-opened tags.
+  {%- endcomment -%}
+  {%- assign single = false -%}
   {%- if section.blocks.size == 1 -%}
-    <button
-      type="button"
-      class="pc-announcement-dismiss"
-      aria-label="{{ 'actions.close' | t }}"
-      data-pc-announcement-dismiss
-    >&#10005;</button>
+    {%- assign single = true -%}
+  {%- endif -%}
+
+  {%- if single -%}
+    <div class="pc-announcement-simple">
+      <div class="pc-announcement-simple__text">
+  {%- else -%}
+    <announcement-bar-component
+      class="announcement-bar__slider"
+      autoplay="{{ section.settings.speed }}"
+      aria-live="polite"
+    >
+      {% render 'slideshow-arrows', icon_style: 'chevron' %}
+      <div class="announcement-bar__slides">
+  {%- endif -%}
+
+  {% content_for 'blocks' %}
+
+  {%- if single -%}
+      </div>
+      <button
+        type="button"
+        class="pc-announcement-dismiss"
+        aria-label="{{ 'actions.close' | t }}"
+        data-pc-announcement-dismiss
+      >&#10005;</button>
+    </div>
+    <script src="{{ 'pc-announcement-dismiss.js' | asset_url }}" defer></script>
+  {%- else -%}
+      </div>
+    </announcement-bar-component>
   {%- endif -%}
 </aside>
-
-{%- if section.blocks.size == 1 -%}
-  <script src="{{ 'pc-announcement-dismiss.js' | asset_url }}" defer></script>
-{%- endif -%}
 
 {% stylesheet %}
   .announcement-bar {
