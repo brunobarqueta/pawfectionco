@@ -97,7 +97,7 @@
         "cat-1": {
           "type": "pc-category-tile",
           "settings": {
-            "collection": "gid://shopify/collection/313930383402",
+            "collection": "",
             "title": "Car & travel",
             "subtext": "Belts, boosters, hammocks and bowls for dogs who ride shotgun.",
             "count_fallback": "9 products"
