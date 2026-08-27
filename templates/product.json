@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "main": {
       "type": "product-information",
@@ -362,23 +363,23 @@
                 "row_shipping": {
                   "type": "group",
                   "settings": {
-                    "width": "fill",
-                    "custom_width": 100,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
                     "content_direction": "row",
                     "horizontal_alignment": "flex-start",
                     "vertical_alignment": "center",
                     "horizontal_alignment_flex_direction_column": "flex-start",
                     "vertical_alignment_flex_direction_column": "center",
                     "gap": 10,
+                    "width": "fill",
+                    "custom_width": 100,
                     "video_position": "cover",
                     "background_image_position": "cover",
                     "border": "none",
                     "border_width": 1,
-                    "border_opacity": 100
+                    "border_opacity": 100,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
                   },
                   "blocks": {
                     "icon_shipping": {
@@ -409,23 +410,23 @@
                 "row_returns": {
                   "type": "group",
                   "settings": {
-                    "width": "fill",
-                    "custom_width": 100,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0,
                     "content_direction": "row",
                     "horizontal_alignment": "flex-start",
                     "vertical_alignment": "center",
                     "horizontal_alignment_flex_direction_column": "flex-start",
                     "vertical_alignment_flex_direction_column": "center",
                     "gap": 10,
+                    "width": "fill",
+                    "custom_width": 100,
                     "video_position": "cover",
                     "background_image_position": "cover",
                     "border": "none",
                     "border_width": 1,
-                    "border_opacity": 100
+                    "border_opacity": 100,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
                   },
                   "blocks": {
                     "icon_returns": {
@@ -560,7 +561,6 @@
           ]
         }
       },
-      "block_order": [],
       "settings": {
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",

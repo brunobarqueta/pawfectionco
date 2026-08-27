@@ -6,38 +6,76 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
+    "pc_hero_1": {
+      "type": "pc-hero",
+      "blocks": {
+        "badge-1": {
+          "type": "pc-hero-badge",
+          "settings": {
+            "text": "Crash-tested to 1,800N",
+            "style": "fill"
+          }
+        },
+        "badge-2": {
+          "type": "pc-hero-badge",
+          "settings": {
+            "text": "60-night trial",
+            "style": "outline"
+          }
+        }
+      },
+      "block_order": [
+        "badge-1",
+        "badge-2"
+      ],
+      "name": "Hero",
+      "settings": {
+        "heading": "Your dog stays put.",
+        "subheading": "One clip, two seconds. The seat belt that fits every harness we've tested — and 214 owners who stopped worrying about the back seat.",
+        "hero_product": "backseat-hammock-cover",
+        "primary_cta_text": "Shop the seat belt",
+        "primary_cta_link": "shopify://collections/all",
+        "secondary_cta_text": "See all gear",
+        "secondary_cta_link": "#collection",
+        "rating_value": 4.8,
+        "rating_count": 214,
+        "hero_image": "shopify://shop_images/photo-1543466835-00a7907e9de1.jpg",
+        "padding-block-start": 24,
+        "padding-block-end": 0
+      }
+    },
     "pc_trust_bar_1": {
       "type": "pc-trust-bar",
-      "name": "Trust bar",
       "blocks": {
         "item-1": {
           "type": "pc-trust-item",
           "settings": {
-            "icon": "icon-available.svg",
-            "label": "Free shipping over $49"
+            "head": "60-night",
+            "sub": "home trial"
           }
         },
         "item-2": {
           "type": "pc-trust-item",
           "settings": {
-            "icon": "icon-checkmark.svg",
-            "label": "Crash-tested buckle"
+            "head": "60-night",
+            "sub": "home trial"
           }
         },
         "item-3": {
           "type": "pc-trust-item",
           "settings": {
-            "icon": "icon-checkmark-burst.svg",
-            "label": "30-day returns"
+            "head": "60-night",
+            "sub": "home trial"
           }
         },
         "item-4": {
           "type": "pc-trust-item",
           "settings": {
-            "icon": "icon-account.svg",
-            "label": "Vet-recommended fit"
+            "head": "60-night",
+            "sub": "home trial"
           }
         }
       },
@@ -47,9 +85,55 @@
         "item-3",
         "item-4"
       ],
+      "name": "Trust bar",
       "settings": {
         "padding-block-start": 32,
         "padding-block-end": 32
+      }
+    },
+    "pc_category_tiles_1": {
+      "type": "pc-category-tiles",
+      "blocks": {
+        "cat-1": {
+          "type": "pc-category-tile",
+          "settings": {
+            "collection": "gid://shopify/collection/313930383402",
+            "title": "Car & travel",
+            "subtext": "Belts, boosters, hammocks and bowls for dogs who ride shotgun.",
+            "count_fallback": "9 products"
+          }
+        },
+        "cat-2": {
+          "type": "pc-category-tile",
+          "settings": {
+            "collection": "gid://shopify/collection/313930416170",
+            "title": "Bath & groom",
+            "subtext": "Shower heads, brushes and towels that make bath night shorter.",
+            "count_fallback": "11 products"
+          }
+        },
+        "cat-3": {
+          "type": "pc-category-tile",
+          "settings": {
+            "collection": "gid://shopify/collection/313930448938",
+            "title": "Play",
+            "subtext": "Chew toys and puzzles tested against actual destroyers.",
+            "count_fallback": "8 products"
+          }
+        }
+      },
+      "block_order": [
+        "cat-1",
+        "cat-2",
+        "cat-3"
+      ],
+      "name": "Category tiles",
+      "settings": {
+        "heading": "Start where the mess is",
+        "all_link_text": "All products →",
+        "all_link": "shopify://collections/all",
+        "padding-block-start": 48,
+        "padding-block-end": 0
       }
     },
     "product_list_fa6P9H": {
@@ -75,11 +159,13 @@
             "height": "fit",
             "custom_height": 100,
             "background_media": "none",
+            "background_color": "",
             "video_position": "cover",
             "background_image_position": "cover",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
+            "border_color": "",
             "border_radius": 0,
             "padding-block-start": 0,
             "padding-block-end": 0,
@@ -97,10 +183,12 @@
                 "alignment": "left",
                 "type_preset": "h2",
                 "font": "var(--font-body--family)",
+                "font_size": "1rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+                "text_color": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -116,7 +204,6 @@
               "name": "t:names.text",
               "settings": {
                 "text": "<p>Ranked by repeat purchases, not by margin. Quick-add works without leaving this page.</p>",
-                "text_color": "#3c4738",
                 "width": "100%",
                 "max_width": "narrow",
                 "alignment": "left",
@@ -127,6 +214,7 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+                "text_color": "#3c4738",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -149,9 +237,11 @@
           "static": true,
           "settings": {
             "product_card_gap": 9,
+            "background_color": "",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
+            "border_color": "",
             "border_radius": 14,
             "padding-block-start": 0,
             "padding-block-end": 0,
@@ -167,6 +257,7 @@
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
+                "border_color": "",
                 "border_radius": 14,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
@@ -189,6 +280,7 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+                "text_color": "",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -214,18 +306,13 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
+                "text_color": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
               "blocks": {}
-            },
-            "product_card_quick_add": {
-              "type": "_product-card-quick-add",
-              "name": "Quick add",
-              "static": true,
-              "settings": {}
             }
           },
           "block_order": [
@@ -237,7 +324,7 @@
       },
       "name": "t:names.product_list",
       "settings": {
-        "collection": "gid://shopify/Collection/313930481706",
+        "collection": "gid://shopify/collection/313930481706",
         "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 8,
@@ -254,234 +341,10 @@
         "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 48,
         "padding-block-end": 48
-      },
-      "block_order": []
-    },
-    "email_signup_1": {
-      "type": "section",
-      "name": "t:names.section",
-      "blocks": {
-        "heading_block": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<h2>Get 10% off your first order</h2>",
-            "text_color": "#151d12",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "center",
-            "type_preset": "h3",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "subtext_block": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<p>One email a fortnight: new colours, restocks, and the occasional thing we learned about dogs.</p>",
-            "text_color": "#3c4738",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "center",
-            "type_preset": "paragraph",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "email_signup_block": {
-          "type": "email-signup",
-          "settings": {
-            "width": "custom",
-            "custom_width": 100,
-            "heading": "",
-            "heading_text_color": "#151d12",
-            "heading_preset": "h3",
-            "border_style": "all",
-            "input_style": "default",
-            "style_class": "button-custom",
-            "custom_button_background": "#151d12",
-            "custom_button_text": "#faf6ec",
-            "custom_button_border": "#151d12",
-            "display_type": "text",
-            "label": "Get my code",
-            "integrated_button": false,
-            "button_type_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "microcopy_block": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<p>Unsubscribe in one tap. We never sell data.</p>",
-            "text_color": "#6f7c6a",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "center",
-            "type_preset": "caption",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "heading_block",
-        "subtext_block",
-        "email_signup_block",
-        "microcopy_block"
-      ],
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "center",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 16,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "#eefbd6",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 28,
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
-    "pc_hero_1": {
-      "type": "pc-hero",
-      "name": "Hero",
-      "blocks": {
-        "badge-1": {
-          "type": "pc-hero-badge",
-          "settings": {
-            "text": "Crash-tested to 1,800N",
-            "style": "fill"
-          }
-        },
-        "badge-2": {
-          "type": "pc-hero-badge",
-          "settings": {
-            "text": "60-night trial",
-            "style": "outline"
-          }
-        }
-      },
-      "block_order": [
-        "badge-1",
-        "badge-2"
-      ],
-      "settings": {
-        "heading": "Your dog stays put.",
-        "subheading": "One clip, two seconds. The seat belt that fits every harness we've tested — and 214 owners who stopped worrying about the back seat.",
-        "primary_cta_text": "Shop the seat belt",
-        "primary_cta_link": "shopify://collections/all",
-        "secondary_cta_text": "See all gear",
-        "secondary_cta_link": "#collection",
-        "rating_value": 4.8,
-        "rating_count": 214,
-        "padding-block-start": 24,
-        "padding-block-end": 0,
-        "hero_product": "gid://shopify/Product/8002607644714"
-      }
-    },
-    "pc_category_tiles_1": {
-      "type": "pc-category-tiles",
-      "name": "Category tiles",
-      "blocks": {
-        "cat-1": {
-          "type": "pc-category-tile",
-          "settings": {
-            "title": "Car & travel",
-            "subtext": "Belts, boosters, hammocks and bowls for dogs who ride shotgun.",
-            "count_fallback": "9 products",
-            "collection": "gid://shopify/Collection/313930383402"
-          }
-        },
-        "cat-2": {
-          "type": "pc-category-tile",
-          "settings": {
-            "title": "Bath & groom",
-            "subtext": "Shower heads, brushes and towels that make bath night shorter.",
-            "count_fallback": "11 products",
-            "collection": "gid://shopify/Collection/313930416170"
-          }
-        },
-        "cat-3": {
-          "type": "pc-category-tile",
-          "settings": {
-            "title": "Play",
-            "subtext": "Chew toys and puzzles tested against actual destroyers.",
-            "count_fallback": "8 products",
-            "collection": "gid://shopify/Collection/313930448938"
-          }
-        }
-      },
-      "block_order": [
-        "cat-1",
-        "cat-2",
-        "cat-3"
-      ],
-      "settings": {
-        "heading": "Start where the mess is",
-        "all_link_text": "All products →",
-        "all_link": "shopify://collections/all",
-        "padding-block-start": 48,
-        "padding-block-end": 0
       }
     },
     "pc_proof_band_1": {
       "type": "pc-proof-band",
-      "name": "Proof band",
       "blocks": {
         "stat-1": {
           "type": "pc-stat",
@@ -510,6 +373,7 @@
         "stat-2",
         "stat-3"
       ],
+      "name": "Proof band",
       "settings": {
         "eyebrow": "Why owners switch",
         "heading": "Tested on the dogs that destroy things",
@@ -522,24 +386,23 @@
     },
     "pc_bundle_1": {
       "type": "pc-bundle",
-      "name": "Bundle",
       "blocks": {
         "item-1": {
           "type": "pc-bundle-item",
           "settings": {
-            "product": "gid://shopify/Product/8002607644714"
+            "product": "gid://shopify/product/8002607644714"
           }
         },
         "item-2": {
           "type": "pc-bundle-item",
           "settings": {
-            "product": "gid://shopify/Product/8002607743018"
+            "product": "gid://shopify/product/8002607743018"
           }
         },
         "item-3": {
           "type": "pc-bundle-item",
           "settings": {
-            "product": "gid://shopify/Product/8002607710250"
+            "product": "gid://shopify/product/8002607710250"
           }
         }
       },
@@ -548,6 +411,7 @@
         "item-2",
         "item-3"
       ],
+      "name": "Bundle",
       "settings": {
         "eyebrow": "Bundle",
         "heading": "The road trip kit",
@@ -559,7 +423,6 @@
     },
     "pc_reviews_1": {
       "type": "pc-reviews",
-      "name": "Reviews",
       "blocks": {
         "r1": {
           "type": "pc-review",
@@ -594,6 +457,7 @@
         "r2",
         "r3"
       ],
+      "name": "Reviews",
       "settings": {
         "heading": "4.8 from 1,190 owners",
         "link_text": "Read all reviews",
@@ -604,7 +468,6 @@
     },
     "pc_editorial_1": {
       "type": "pc-editorial",
-      "name": "Editorial",
       "blocks": {
         "card-1": {
           "type": "pc-editorial-card",
@@ -612,7 +475,8 @@
             "style": "dark",
             "eyebrow": "Field notes",
             "title": "How to wash a dog who hates water",
-            "link_text": "Read the guide"
+            "link_text": "Read the guide",
+            "link": ""
           }
         },
         "card-2": {
@@ -621,7 +485,8 @@
             "style": "light",
             "eyebrow": "Safety",
             "title": "Why collars fail in a crash and harnesses don't",
-            "link_text": "Read the guide"
+            "link_text": "Read the guide",
+            "link": ""
           }
         }
       },
@@ -629,9 +494,160 @@
         "card-1",
         "card-2"
       ],
+      "name": "Editorial",
       "settings": {
         "padding-block-start": 48,
         "padding-block-end": 0
+      }
+    },
+    "email_signup_1": {
+      "type": "section",
+      "blocks": {
+        "heading_block": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<h2>Get 10% off your first order</h2>",
+            "width": "fit-content",
+            "max_width": "normal",
+            "alignment": "center",
+            "type_preset": "h3",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "#151d12",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "subtext_block": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>One email a fortnight: new colours, restocks, and the occasional thing we learned about dogs.</p>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "center",
+            "type_preset": "paragraph",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "#3c4738",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "email_signup_block": {
+          "type": "email-signup",
+          "settings": {
+            "width": "custom",
+            "custom_width": 100,
+            "heading": "",
+            "heading_text_color": "#151d12",
+            "heading_preset": "h3",
+            "border_style": "all",
+            "input_style": "default",
+            "border_width": 1,
+            "border_radius": 100,
+            "input_background_color": "",
+            "input_text_color": "",
+            "input_border_color": "",
+            "input_type_preset": "paragraph",
+            "style_class": "button-custom",
+            "custom_button_background": "#151d12",
+            "custom_button_text": "#faf6ec",
+            "custom_button_border": "#151d12",
+            "link_text_color": "",
+            "display_type": "text",
+            "label": "Get my code",
+            "integrated_button": false,
+            "button_type_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "microcopy_block": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Unsubscribe in one tap. We never sell data.</p>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "center",
+            "type_preset": "caption",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "#6f7c6a",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "heading_block",
+        "subtext_block",
+        "email_signup_block",
+        "microcopy_block"
+      ],
+      "name": "t:names.section",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "#eefbd6",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 28,
+        "padding-block-start": 48,
+        "padding-block-end": 48
       }
     }
   },
