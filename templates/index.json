@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "pc_hero_1": {
       "type": "pc-hero",
@@ -135,6 +136,18 @@
         "padding-block-end": 0
       }
     },
+    "pc_featured_collection_1": {
+      "type": "pc-featured-collection",
+      "name": "Featured collection",
+      "settings": {
+        "heading": "What owners buy first",
+        "subheading": "Ranked by repeat purchases, not by margin. Quick-add works without leaving this page.",
+        "collection": "best-sellers",
+        "max_products": 8,
+        "padding-block-start": 48,
+        "padding-block-end": 0
+      }
+    },
     "pc_proof_band_1": {
       "type": "pc-proof-band",
       "blocks": {
@@ -182,19 +195,19 @@
         "item-1": {
           "type": "pc-bundle-item",
           "settings": {
-            "product": "gid://shopify/product/8002607644714"
+            "product": "backseat-hammock-cover"
           }
         },
         "item-2": {
           "type": "pc-bundle-item",
           "settings": {
-            "product": "gid://shopify/product/8002607743018"
+            "product": "car-door-protector-panels"
           }
         },
         "item-3": {
           "type": "pc-bundle-item",
           "settings": {
-            "product": "gid://shopify/product/8002607710250"
+            "product": "crash-tested-car-seat-belt"
           }
         }
       },
@@ -265,6 +278,7 @@
           "type": "pc-editorial-card",
           "settings": {
             "style": "dark",
+            "image": "shopify://shop_images/photo-1583512603805-3cc6b41f3edb.jpg",
             "eyebrow": "Field notes",
             "title": "How to wash a dog who hates water",
             "link_text": "Read the guide",
@@ -275,6 +289,7 @@
           "type": "pc-editorial-card",
           "settings": {
             "style": "light",
+            "image": "shopify://shop_images/photo-1576201836106-db1758fd1c97.jpg",
             "eyebrow": "Safety",
             "title": "Why collars fail in a crash and harnesses don't",
             "link_text": "Read the guide",
@@ -440,18 +455,6 @@
         "border_radius": 28,
         "padding-block-start": 48,
         "padding-block-end": 48
-      }
-    },
-    "pc_featured_collection_1": {
-      "type": "pc-featured-collection",
-      "name": "Featured collection",
-      "settings": {
-        "heading": "What owners buy first",
-        "subheading": "Ranked by repeat purchases, not by margin. Quick-add works without leaving this page.",
-        "collection": "gid://shopify/Collection/313930481706",
-        "max_products": 8,
-        "padding-block-start": 48,
-        "padding-block-end": 0
       }
     }
   },
