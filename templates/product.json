@@ -67,28 +67,10 @@
           },
           "blocks": {
             "text_breadcrumb": {
-              "type": "text",
-              "name": "t:names.text",
+              "type": "custom-liquid",
+              "name": "t:names.custom_liquid",
               "settings": {
-                "text": "<p class=\"pc-breadcrumb\"><a href=\"/collections/all\">All products</a> <span aria-hidden=\"true\">&rarr;</span> {{ closest.product.title }}</p>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "paragraph",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "custom_liquid": "<p class=\"pc-breadcrumb\"><a href=\"/collections/all\">All products</a> <span aria-hidden=\"true\">&rarr;</span> {{ closest.product.title }}</p>"
               },
               "blocks": {}
             },
@@ -158,7 +140,9 @@
                   "blocks": {}
                 }
               },
-              "block_order": ["text_xrnftG"]
+              "block_order": [
+                "text_xrnftG"
+              ]
             },
             "review_rMdQ21": {
               "type": "review",
@@ -417,7 +401,10 @@
                       }
                     }
                   },
-                  "block_order": ["icon_shipping", "text_shipping"]
+                  "block_order": [
+                    "icon_shipping",
+                    "text_shipping"
+                  ]
                 },
                 "row_returns": {
                   "type": "group",
@@ -461,10 +448,16 @@
                       }
                     }
                   },
-                  "block_order": ["icon_returns", "text_returns"]
+                  "block_order": [
+                    "icon_returns",
+                    "text_returns"
+                  ]
                 }
               },
-              "block_order": ["row_shipping", "row_returns"]
+              "block_order": [
+                "row_shipping",
+                "row_returns"
+              ]
             },
             "payment_icons_row": {
               "type": "payment-icons",
@@ -502,7 +495,9 @@
                       }
                     }
                   },
-                  "block_order": ["text"]
+                  "block_order": [
+                    "text"
+                  ]
                 },
                 "row_size_fit": {
                   "type": "_accordion-row",
@@ -518,7 +513,9 @@
                       }
                     }
                   },
-                  "block_order": ["text"]
+                  "block_order": [
+                    "text"
+                  ]
                 },
                 "row_care": {
                   "type": "_accordion-row",
@@ -534,10 +531,16 @@
                       }
                     }
                   },
-                  "block_order": ["text"]
+                  "block_order": [
+                    "text"
+                  ]
                 }
               },
-              "block_order": ["row_shipping_returns", "row_size_fit", "row_care"]
+              "block_order": [
+                "row_shipping_returns",
+                "row_size_fit",
+                "row_care"
+              ]
             }
           },
           "block_order": [
@@ -680,6 +683,12 @@
                 "padding-inline-end": 0
               },
               "blocks": {}
+            },
+            "product_card_quick_add": {
+              "type": "_product-card-quick-add",
+              "name": "Quick add",
+              "static": true,
+              "settings": {}
             }
           },
           "block_order": [

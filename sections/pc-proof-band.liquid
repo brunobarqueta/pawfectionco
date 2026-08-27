@@ -1,0 +1,135 @@
+{%- comment -%}
+  Pawfectionco proof band: dark ink card with an editorial claim on the left
+  and a row of merchant-editable stats on the right. Matches Homepage.dc.html.
+{%- endcomment -%}
+
+<div
+  class="pc-proof-band section section--page-width spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {{ section.shopify_attributes }}
+>
+  <div class="pc-proof-band__card">
+    <div class="pc-proof-band__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="pc-proof-band__eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pc-proof-band__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <p class="pc-proof-band__body">{{ section.settings.body }}</p>
+      {%- endif -%}
+      {%- if section.settings.link_text != blank -%}
+        <a href="{{ section.settings.link | default: '#' }}" class="pc-proof-band__link">
+          {{- section.settings.link_text | escape -}} →
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="pc-proof-band__stats">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'pc-stat' -%}
+          <div class="pc-proof-band__stat" {{ block.shopify_attributes }}>
+            <span class="pc-proof-band__stat-n">{{ block.settings.number | escape }}</span>
+            <span class="pc-proof-band__stat-label">{{ block.settings.label | escape }}</span>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Proof band",
+  "tag": "div",
+  "blocks": [
+    {
+      "type": "pc-stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number",
+          "default": "1,800N"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Crash-test load on the seat belt buckle"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Why owners switch"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Tested on the dogs that destroy things"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "Every product goes to twelve households for six weeks before it goes on sale. If it comes back chewed through, it doesn't ship."
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link text",
+      "default": "How we test"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Proof band",
+      "category": "Pawfectionco",
+      "blocks": {
+        "stat-1": { "type": "pc-stat", "settings": { "number": "1,800N", "label": "Crash-test load on the seat belt buckle" } },
+        "stat-2": { "type": "pc-stat", "settings": { "number": "12", "label": "Households test every product for six weeks" } },
+        "stat-3": { "type": "pc-stat", "settings": { "number": "94%", "label": "Of owners keep it past the 60-night trial" } }
+      },
+      "block_order": ["stat-1", "stat-2", "stat-3"]
+    }
+  ]
+}
+{% endschema %}

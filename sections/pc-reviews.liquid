@@ -1,0 +1,171 @@
+{%- comment -%}
+  Pawfectionco reviews grid: heading + "read all reviews" link, grid of
+  merchant-editable review cards (star rating, verified badge, quote, who).
+  No review app is installed, so — same as the PDP rating and the
+  testimonials section — this is authored content via block settings, not
+  pulled from real review data. Distinct from sections/pc-testimonials.liquid
+  (that one is a horizontal-scroll avatar layout for a different placement;
+  this one matches the Homepage.dc.html "reviews" grid exactly).
+{%- endcomment -%}
+
+<div
+  class="pc-reviews section section--page-width spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {{ section.shopify_attributes }}
+>
+  <div class="pc-reviews__header">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="pc-reviews__heading">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if section.settings.link_text != blank -%}
+      <a href="{{ section.settings.link | default: '#' }}" class="pc-reviews__link">
+        {{- section.settings.link_text | escape -}} →
+      </a>
+    {%- endif -%}
+  </div>
+
+  <div class="pc-reviews__grid">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'pc-review' -%}
+        <article class="pc-review-card" {{ block.shopify_attributes }}>
+          <div class="pc-review-card__top">
+            <span
+              class="pc-review-card__stars"
+              role="img"
+              aria-label="{{ block.settings.rating }} out of 5 stars"
+            >
+              {%- for i in (1..5) -%}★{%- endfor -%}
+            </span>
+            {%- if block.settings.verified -%}
+              <span class="pc-review-card__verified">✓ Verified</span>
+            {%- endif -%}
+          </div>
+          <p class="pc-review-card__body">{{ block.settings.body | escape }}</p>
+          <div class="pc-review-card__who">{{ block.settings.who | escape }}</div>
+        </article>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Reviews",
+  "tag": "div",
+  "blocks": [
+    {
+      "type": "pc-review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Show verified badge",
+          "default": true
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Review text",
+          "default": "Clipped it in once and never thought about it again. My whippet used to slide around the whole back seat."
+        },
+        {
+          "type": "text",
+          "id": "who",
+          "label": "Attribution",
+          "default": "Marta K. · Whippet, 14kg"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "4.8 from 1,190 owners"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link text",
+      "default": "Read all reviews"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews",
+      "category": "Pawfectionco",
+      "blocks": {
+        "r1": {
+          "type": "pc-review",
+          "settings": {
+            "rating": 5,
+            "verified": true,
+            "body": "Clipped it in once and never thought about it again. My whippet used to slide around the whole back seat.",
+            "who": "Marta K. · Whippet, 14kg"
+          }
+        },
+        "r2": {
+          "type": "pc-review",
+          "settings": {
+            "rating": 5,
+            "verified": true,
+            "body": "The shower head fits our garden tap and the flow is gentle enough that she stopped bolting halfway through.",
+            "who": "Dan R. · Labrador, 31kg"
+          }
+        },
+        "r3": {
+          "type": "pc-review",
+          "settings": {
+            "rating": 5,
+            "verified": true,
+            "body": "Third rope toy in two years that survived more than a week. He's a terrier, that's the whole review.",
+            "who": "Priya S. · Terrier, 9kg"
+          }
+        }
+      },
+      "block_order": ["r1", "r2", "r3"]
+    }
+  ]
+}
+{% endschema %}

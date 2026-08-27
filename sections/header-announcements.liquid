@@ -38,7 +38,20 @@
       {% content_for 'blocks' %}
     </div>
   </announcement-bar-component>
+
+  {%- if section.blocks.size == 1 -%}
+    <button
+      type="button"
+      class="pc-announcement-dismiss"
+      aria-label="{{ 'actions.close' | t }}"
+      data-pc-announcement-dismiss
+    >&#10005;</button>
+  {%- endif -%}
 </aside>
+
+{%- if section.blocks.size == 1 -%}
+  <script src="{{ 'pc-announcement-dismiss.js' | asset_url }}" defer></script>
+{%- endif -%}
 
 {% stylesheet %}
   .announcement-bar {

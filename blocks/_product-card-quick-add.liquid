@@ -1,0 +1,28 @@
+{%- doc -%}
+  Pawfectionco: quick-add rendered in-flow at the bottom of the card content
+  (after price/swatches), not floating over the media well. The design
+  system calls for a permanently visible full-width pill here, which is a
+  different layout than Horizon's default image-corner overlay button, so
+  this wraps the shared `quick-add` snippet in a scoping class that the
+  in-flow layout rules in assets/pawfectionco-tokens.css target.
+{%- enddoc -%}
+
+{% liquid
+  assign product = closest.product
+%}
+
+{%- unless product == blank -%}
+  {%- if product.available and settings.quick_add or settings.mobile_quick_add -%}
+    <div class="pc-card-quick-add">
+      {% render 'quick-add', product: product, section_id: section.id %}
+    </div>
+  {%- endif -%}
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "Quick add",
+  "tag": null,
+  "settings": []
+}
+{% endschema %}

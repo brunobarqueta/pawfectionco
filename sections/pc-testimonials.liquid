@@ -21,7 +21,7 @@
 
   <div class="pc-testimonials__track">
     {%- for block in section.blocks -%}
-      {%- if block.type == '_pc-testimonial' -%}
+      {%- if block.type == 'pc-testimonial' -%}
         <div
           class="pc-testimonial-card"
           {{ block.shopify_attributes }}
@@ -79,7 +79,7 @@
   "tag": "div",
   "blocks": [
     {
-      "type": "_pc-testimonial",
+      "type": "pc-testimonial",
       "name": "Testimonial",
       "settings": [
         {
@@ -166,7 +166,7 @@
       "category": "Pawfectionco",
       "blocks": {
         "t1": {
-          "type": "_pc-testimonial",
+          "type": "pc-testimonial",
           "settings": {
             "rating": 5,
             "quote": "Our pug is a wiggler and this seat belt actually held during a hard brake. Worth every dollar.",
@@ -175,7 +175,7 @@
           }
         },
         "t2": {
-          "type": "_pc-testimonial",
+          "type": "pc-testimonial",
           "settings": {
             "rating": 5,
             "quote": "The shower attachment cut bath time in half and my golden retriever barely fought me on it.",
@@ -184,7 +184,7 @@
           }
         },
         "t3": {
-          "type": "_pc-testimonial",
+          "type": "pc-testimonial",
           "settings": {
             "rating": 4,
             "quote": "Simple, sturdy, no squeaky parts after two months of daily fetch. My cat even approves.",

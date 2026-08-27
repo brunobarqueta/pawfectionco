@@ -1,0 +1,152 @@
+{%- comment -%}
+  Pawfectionco editorial cards: 2-up field-notes/guide cards, each with its
+  own image, eyebrow, title and link. Matches Homepage.dc.html's editorial
+  row (one dark ink card, one light card by default — style is merchant-set
+  per block).
+{%- endcomment -%}
+
+<div
+  class="pc-editorial section section--page-width spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {{ section.shopify_attributes }}
+>
+  <div class="pc-editorial__grid">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'pc-editorial-card' -%}
+        <a
+          href="{{ block.settings.link | default: '#' }}"
+          class="pc-editorial-card pc-editorial-card--{{ block.settings.style }}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="pc-editorial-card__media">
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 900
+                | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 50vw, 100vw', widths: '450,650,900', class: 'pc-editorial-card__image'
+              }}
+            {%- else -%}
+              <span class="pc-editorial-card__placeholder">{{ block.settings.title | escape }}</span>
+            {%- endif -%}
+          </div>
+          <div class="pc-editorial-card__body">
+            {%- if block.settings.eyebrow != blank -%}
+              <span class="pc-editorial-card__eyebrow">{{ block.settings.eyebrow | escape }}</span>
+            {%- endif -%}
+            <span class="pc-editorial-card__title">{{ block.settings.title | escape }}</span>
+            {%- if block.settings.link_text != blank -%}
+              <span class="pc-editorial-card__link">{{ block.settings.link_text | escape }} →</span>
+            {%- endif -%}
+          </div>
+        </a>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Editorial",
+  "tag": "div",
+  "blocks": [
+    {
+      "type": "pc-editorial-card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "options": [
+            { "value": "dark", "label": "Dark (ink)" },
+            { "value": "light", "label": "Light (cream)" }
+          ],
+          "default": "light"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "Field notes"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "How to wash a dog who hates water"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Read the guide"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial",
+      "category": "Pawfectionco",
+      "blocks": {
+        "card-1": {
+          "type": "pc-editorial-card",
+          "settings": {
+            "style": "dark",
+            "eyebrow": "Field notes",
+            "title": "How to wash a dog who hates water",
+            "link_text": "Read the guide"
+          }
+        },
+        "card-2": {
+          "type": "pc-editorial-card",
+          "settings": {
+            "style": "light",
+            "eyebrow": "Safety",
+            "title": "Why collars fail in a crash and harnesses don't",
+            "link_text": "Read the guide"
+          }
+        }
+      },
+      "block_order": ["card-1", "card-2"]
+    }
+  ]
+}
+{% endschema %}

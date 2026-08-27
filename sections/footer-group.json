@@ -6,8 +6,7 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */
-{
+ */{
   "type": "footer",
   "name": "t:names.footer",
   "sections": {
@@ -49,10 +48,10 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_LWt8Pz": {
+            "brand_name": {
               "type": "text",
               "settings": {
-                "text": "<h2>Join our email list</h2>",
+                "text": "<h2>pawfectionco</h2>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -69,14 +68,15 @@
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-end": 0,
+                "text_color": "#faf6ec"
               },
               "blocks": {}
             },
-            "text_f9CFLH": {
+            "brand_tagline": {
               "type": "text",
               "settings": {
-                "text": "<p>Get exclusive deals and early access to new products.</p>",
+                "text": "<p>Gear that survives the dog. Car, bath and play.</p>",
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "left",
@@ -93,35 +93,52 @@
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-end": 0,
+                "text_color": "#a5afa0"
               },
               "blocks": {}
             }
           },
           "block_order": [
-            "text_LWt8Pz",
-            "text_f9CFLH"
+            "brand_name",
+            "brand_tagline"
           ]
         },
-        "email_signup_crihX7": {
-          "type": "email-signup",
+        "menu_shop": {
+          "type": "menu",
           "settings": {
-            "width": "fill",
-            "custom_width": 100,
-            "heading_preset": "h3",
-            "border_style": "all",
-            "input_style": "custom",
-            "border_width": 1,
-            "border_radius": 100,
-            "input_background_color": "{{ settings.color_palette.background }}",
-            "input_text_color": "{{ settings.color_palette.color1 }}",
-            "input_border_color": "{{ settings.color_palette.color2 }}",
-            "input_type_preset": "paragraph",
-            "style_class": "button-unstyled",
-            "display_type": "arrow",
-            "label": "Sign up",
-            "integrated_button": true,
-            "button_type_preset": "paragraph",
+            "heading": "Shop",
+            "show_as_accordion": false,
+            "accordion_dividers": false,
+            "menu_spacing": 9,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "menu_help": {
+          "type": "menu",
+          "settings": {
+            "heading": "Help",
+            "show_as_accordion": false,
+            "accordion_dividers": false,
+            "menu_spacing": 9,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "menu_company": {
+          "type": "menu",
+          "settings": {
+            "heading": "Company",
+            "show_as_accordion": false,
+            "accordion_dividers": false,
+            "menu_spacing": 9,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -132,15 +149,17 @@
       },
       "block_order": [
         "group_H6VpwJ",
-        "email_signup_crihX7"
+        "menu_shop",
+        "menu_help",
+        "menu_company"
       ],
       "name": "t:names.footer",
       "settings": {
         "section_width": "page-width",
         "gap": 20,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 30,
-        "padding-block-end": 30
+        "background_color": "#151d12",
+        "padding-block-start": 48,
+        "padding-block-end": 28
       }
     },
     "footer_utilities_jLGE8U": {
@@ -185,8 +204,8 @@
         "section_width": "page-width",
         "gap": 24,
         "divider_thickness": 1,
-        "divider_color": "{{ settings.color_palette.color2 }}",
-        "background_color": "{{ settings.color_palette.background }}",
+        "divider_color": "#3c4738",
+        "background_color": "#151d12",
         "padding-block-start": 20,
         "padding-block-end": 48
       }

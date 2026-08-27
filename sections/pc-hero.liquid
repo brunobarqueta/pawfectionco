@@ -1,0 +1,543 @@
+{%- comment -%}
+  Pawfectionco homepage hero: dark ink panel (badges, heading, subhead, two
+  CTAs, rating) beside a photo panel with a floating mini product card. Built
+  bespoke to match the Homepage.dc.html mockup pixel-for-pixel rather than
+  Horizon's generic `hero` section, which doesn't have this layout.
+
+  The floating mini card and its "Add" button are wired to a real product
+  (hero_product) — price, image and add-to-cart all come from live Shopify
+  data, not the mockup's placeholder numbers.
+{%- endcomment -%}
+
+{%- liquid
+  assign product = section.settings.hero_product
+  assign variant = product.selected_or_first_available_variant
+-%}
+
+<section
+  class="pc-hero section section--page-width spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {{ section.shopify_attributes }}
+>
+  <div class="pc-hero__grid">
+    <div class="pc-hero__panel">
+      {%- if section.blocks.size > 0 -%}
+        <div class="pc-hero__badges">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'pc-hero-badge' -%}
+              <span
+                class="pc-hero__badge{% if block.settings.style == 'fill' %} pc-hero__badge--fill{% endif %}"
+                {{ block.shopify_attributes }}
+              >{{ block.settings.text | escape }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h1 class="pc-hero__heading">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+
+      {%- if section.settings.subheading != blank -%}
+        <p class="pc-hero__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+
+      <div class="pc-hero__ctas">
+        {%- if product != blank -%}
+          <a href="{{ product.url }}" class="pc-hero__cta-primary">
+            {{- section.settings.primary_cta_text | escape }} · {{ variant.price | money -}}
+          </a>
+        {%- elsif section.settings.primary_cta_link != blank -%}
+          <a href="{{ section.settings.primary_cta_link }}" class="pc-hero__cta-primary">
+            {{- section.settings.primary_cta_text | escape -}}
+          </a>
+        {%- endif -%}
+
+        {%- if section.settings.secondary_cta_text != blank -%}
+          <a
+            href="{{ section.settings.secondary_cta_link | default: '#' }}"
+            class="pc-hero__cta-secondary"
+          >{{ section.settings.secondary_cta_text | escape }}</a>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.rating_value > 0 -%}
+        <div
+          class="pc-hero__rating"
+          role="img"
+          aria-label="{{ section.settings.rating_value }} out of 5 stars, from {{ section.settings.rating_count }} verified owners"
+        >
+          <span class="pc-hero__rating-stars" aria-hidden="true">
+            {%- for i in (1..5) -%}★{%- endfor -%}
+          </span>
+          <span class="pc-hero__rating-value">{{ section.settings.rating_value }}</span>
+          <span>from {{ section.settings.rating_count }} verified owners</span>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="pc-hero__media">
+      {%- if section.settings.hero_image != blank -%}
+        {{
+          section.settings.hero_image
+          | image_url: width: 1600
+          | image_tag:
+            loading: 'eager',
+            fetchpriority: 'high',
+            sizes: '(min-width: 750px) 50vw, 100vw',
+            widths: '480,750,1100,1600',
+            class: 'pc-hero__image'
+        }}
+      {%- else -%}
+        <div class="pc-hero__image-placeholder" role="img" aria-label="Hero photo placeholder">
+          <span>hero photo — dog buckled in, window down</span>
+        </div>
+      {%- endif -%}
+
+      {%- if product != blank -%}
+        <div class="pc-hero__mini-card">
+          <div class="pc-hero__mini-card-media">
+            {%- if product.featured_image != blank -%}
+              {{ product.featured_image | image_url: width: 96 | image_tag: width: 48, height: 48, alt: '' }}
+            {%- endif -%}
+          </div>
+          <div class="pc-hero__mini-card-info">
+            <div class="pc-hero__mini-card-title">{{ product.title }}</div>
+            <div class="pc-hero__mini-card-price">
+              {{- variant.price | money -}}
+              {%- if variant.compare_at_price > variant.price -%}
+                <span class="pc-hero__mini-card-compare">{{ variant.compare_at_price | money }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+          <div class="pc-hero__mini-card-add">
+            {% render 'quick-add', product: product, section_id: section.id %}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .pc-hero__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  @media screen and (min-width: 750px) {
+    .pc-hero__grid {
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+  }
+
+  .pc-hero__panel {
+    background: var(--pc-ink-900);
+    color: var(--pc-surface-page);
+    border-radius: var(--pc-r-xl);
+    padding: clamp(28px, 4vw, 52px);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    justify-content: center;
+    min-height: clamp(420px, 48vw, 560px);
+  }
+
+  .pc-hero__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .pc-hero__badge {
+    font-family: var(--font-accent--family);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    border: 1.5px solid var(--pc-ink-700);
+    color: var(--pc-surface-page);
+    padding: 6px 12px;
+    border-radius: var(--pc-r-pill);
+  }
+
+  .pc-hero__badge--fill {
+    background: var(--pc-lime);
+    color: var(--pc-ink-900);
+    border-color: var(--pc-lime);
+    padding: 7px 12px;
+  }
+
+  .pc-hero__heading {
+    margin: 0;
+    font-family: var(--font-accent--family);
+    font-weight: 900;
+    font-size: clamp(40px, 6.4vw, 76px);
+    line-height: 0.98;
+    letter-spacing: -0.033em;
+    text-wrap: balance;
+  }
+
+  .pc-hero__subheading {
+    margin: 0;
+    max-width: 440px;
+    font-size: clamp(17px, 1.5vw, 19px);
+    line-height: 1.5;
+    color: var(--pc-border-hairline);
+    text-wrap: pretty;
+  }
+
+  .pc-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .pc-hero__cta-primary {
+    height: 56px;
+    padding: 0 30px;
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    border-radius: var(--pc-r-pill);
+    background: var(--pc-lime);
+    color: var(--pc-ink-900);
+    font-family: var(--font-accent--family);
+    font-weight: 700;
+    font-size: 17px;
+    text-decoration: none;
+    transition: background var(--pc-t-fast) var(--pc-ease-out), transform 90ms;
+  }
+
+  .pc-hero__cta-primary:hover {
+    background: var(--pc-lime-press);
+    text-decoration: none;
+    color: var(--pc-ink-900);
+  }
+
+  .pc-hero__cta-primary:active {
+    transform: scale(0.97);
+  }
+
+  .pc-hero__cta-secondary {
+    height: 56px;
+    padding: 0 24px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--pc-r-pill);
+    color: var(--pc-surface-page);
+    font-weight: 700;
+    font-size: 16px;
+    border: 1.5px solid var(--pc-ink-700);
+    text-decoration: none;
+  }
+
+  .pc-hero__cta-secondary:hover {
+    background: #26301f;
+    text-decoration: none;
+    color: var(--pc-surface-page);
+  }
+
+  .pc-hero__rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--pc-ink-300);
+  }
+
+  .pc-hero__rating-stars {
+    color: var(--pc-star);
+    letter-spacing: 1.5px;
+  }
+
+  .pc-hero__rating-value {
+    font-weight: 700;
+    color: var(--pc-surface-page);
+  }
+
+  .pc-hero__media {
+    position: relative;
+    border-radius: var(--pc-r-xl);
+    overflow: hidden;
+    background: var(--pc-surface-sunken);
+    min-height: clamp(300px, 42vw, 560px);
+  }
+
+  .pc-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: auto;
+  }
+
+  .pc-hero__image-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: clamp(300px, 42vw, 560px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-image: repeating-linear-gradient(135deg, #e9e1cd 0 12px, #f1ebdc 12px 24px);
+  }
+
+  .pc-hero__image-placeholder span {
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 12px;
+    color: var(--pc-ink-500);
+    background: var(--pc-surface-page);
+    padding: 8px 13px;
+    border-radius: var(--pc-r-pill);
+  }
+
+  .pc-hero__mini-card {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    background: rgb(250 246 236 / 0.94);
+    border-radius: var(--pc-r-lg);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    backdrop-filter: blur(6px);
+  }
+
+  .pc-hero__mini-card-media {
+    width: 48px;
+    height: 48px;
+    flex: none;
+    border-radius: var(--pc-r-md);
+    background: var(--pc-surface-sunken);
+    overflow: hidden;
+  }
+
+  .pc-hero__mini-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pc-hero__mini-card-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .pc-hero__mini-card-title {
+    font-family: var(--font-accent--family);
+    font-weight: 700;
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--pc-ink-900);
+  }
+
+  .pc-hero__mini-card-price {
+    font-size: 13px;
+    color: var(--pc-ink-700);
+    font-variant-numeric: tabular-nums;
+    display: flex;
+    gap: 6px;
+  }
+
+  .pc-hero__mini-card-compare {
+    text-decoration: line-through;
+    color: var(--pc-ink-500);
+  }
+
+  .pc-hero__mini-card-add {
+    flex: none;
+  }
+
+  .pc-hero__mini-card-add .quick-add {
+    position: static;
+    inset: auto;
+    pointer-events: auto;
+  }
+
+  .pc-hero__mini-card-add button.quick-add__button {
+    position: static !important;
+    display: flex !important;
+    width: max-content !important;
+    max-inline-size: none !important;
+    height: 44px !important;
+    padding-inline: 18px !important;
+    opacity: 1 !important;
+    border-radius: var(--pc-r-pill);
+    border: none;
+    background: var(--pc-lime) !important;
+    color: var(--pc-ink-900);
+    font-family: var(--font-accent--family);
+    font-weight: 700;
+    font-size: 15px;
+    backdrop-filter: none;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "pc-hero-badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Badge text",
+          "default": "Crash-tested to 1,800N"
+        },
+        {
+          "type": "select",
+          "id": "style",
+          "label": "Style",
+          "options": [
+            { "value": "fill", "label": "Lime fill" },
+            { "value": "outline", "label": "Outline" }
+          ],
+          "default": "outline"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Your dog stays put."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "One clip, two seconds. The seat belt that fits every harness we've tested — and 214 owners who stopped worrying about the back seat."
+    },
+    {
+      "type": "header",
+      "content": "Primary CTA + featured product"
+    },
+    {
+      "type": "paragraph",
+      "content": "Pick the product this hero sells. Its live price powers the CTA button and the floating mini card, and its image/title/Add button are all real (not placeholder)."
+    },
+    {
+      "type": "product",
+      "id": "hero_product",
+      "label": "Featured product"
+    },
+    {
+      "type": "text",
+      "id": "primary_cta_text",
+      "label": "Primary button label (price is appended automatically)",
+      "default": "Shop the seat belt"
+    },
+    {
+      "type": "url",
+      "id": "primary_cta_link",
+      "label": "Primary button link (used only if no featured product is set)"
+    },
+    {
+      "type": "header",
+      "content": "Secondary CTA"
+    },
+    {
+      "type": "text",
+      "id": "secondary_cta_text",
+      "label": "Secondary button label",
+      "default": "See all gear"
+    },
+    {
+      "type": "url",
+      "id": "secondary_cta_link",
+      "label": "Secondary button link"
+    },
+    {
+      "type": "header",
+      "content": "Rating"
+    },
+    {
+      "type": "paragraph",
+      "content": "No review app is installed yet, so this is merchant-entered, not pulled from real review data. Set rating to 0 to hide."
+    },
+    {
+      "type": "range",
+      "id": "rating_value",
+      "label": "Rating value",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "default": 4.8
+    },
+    {
+      "type": "number",
+      "id": "rating_count",
+      "label": "Review count",
+      "default": 214
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero photo"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "category": "Pawfectionco",
+      "blocks": {
+        "badge-1": {
+          "type": "pc-hero-badge",
+          "settings": { "text": "Crash-tested to 1,800N", "style": "fill" }
+        },
+        "badge-2": {
+          "type": "pc-hero-badge",
+          "settings": { "text": "60-night trial", "style": "outline" }
+        }
+      },
+      "block_order": ["badge-1", "badge-2"]
+    }
+  ]
+}
+{% endschema %}

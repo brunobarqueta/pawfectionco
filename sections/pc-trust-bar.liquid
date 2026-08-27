@@ -1,31 +1,23 @@
-{% comment %}
-  Pawfectionco trust bar. A row of 3-4 merchant-editable reassurance items
-  (icon + short label) on a sunken background. Content lives entirely in
-  block settings so the merchant can swap real shipping/return/warranty
-  copy without touching code.
-{% endcomment %}
+{%- comment -%}
+  Pawfectionco trust strip: a row of merchant-editable "60-night / home
+  trial" style two-line stats on a sunken card. Matches the Homepage.dc.html
+  mockup's trust strip exactly (no icons — just bold headline + muted sub).
+{%- endcomment -%}
 
 <div
-  class="pc-trust-bar spacing-style"
-  style="
-    --pc-trust-count: {{ section.blocks.size }};
-    {% render 'spacing-style', settings: section.settings %}
-  "
+  class="pc-trust-bar section section--page-width spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
   {{ section.shopify_attributes }}
 >
-  <div class="pc-trust-bar__grid">
+  <div class="pc-trust-bar__card">
     {%- for block in section.blocks -%}
-      {%- if block.type == '_pc-trust-item' -%}
+      {%- if block.type == 'pc-trust-item' -%}
         <div
           class="pc-trust-bar__item"
           {{ block.shopify_attributes }}
         >
-          {%- if block.settings.icon != blank -%}
-            <span class="pc-trust-bar__icon svg-wrapper">
-              {{- block.settings.icon | inline_asset_content -}}
-            </span>
-          {%- endif -%}
-          <span class="pc-trust-bar__label">{{ block.settings.label | escape }}</span>
+          <span class="pc-trust-bar__head">{{ block.settings.head | escape }}</span>
+          <span class="pc-trust-bar__sub">{{ block.settings.sub | escape }}</span>
         </div>
       {%- endif -%}
     {%- endfor -%}
@@ -34,30 +26,24 @@
 
 {% schema %}
 {
-  "name": "Trust bar",
+  "name": "Trust strip",
   "tag": "div",
   "blocks": [
     {
-      "type": "_pc-trust-item",
-      "name": "Trust item",
+      "type": "pc-trust-item",
+      "name": "Stat",
       "settings": [
         {
-          "type": "select",
-          "id": "icon",
-          "label": "Icon",
-          "options": [
-            { "value": "icon-checkmark.svg", "label": "Checkmark" },
-            { "value": "icon-available.svg", "label": "Shipping / truck" },
-            { "value": "icon-checkmark-burst.svg", "label": "Burst check" },
-            { "value": "icon-account.svg", "label": "Vet / person" }
-          ],
-          "default": "icon-checkmark.svg"
+          "type": "text",
+          "id": "head",
+          "label": "Headline",
+          "default": "60-night"
         },
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
-          "default": "Free shipping"
+          "id": "sub",
+          "label": "Subtext",
+          "default": "home trial"
         }
       ]
     }
@@ -76,7 +62,7 @@
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 32
+      "default": 12
     },
     {
       "type": "range",
@@ -86,29 +72,29 @@
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 32
+      "default": 0
     }
   ],
   "presets": [
     {
-      "name": "Trust bar",
+      "name": "Trust strip",
       "category": "Pawfectionco",
       "blocks": {
         "item-1": {
-          "type": "_pc-trust-item",
-          "settings": { "icon": "icon-available.svg", "label": "Free shipping over $49" }
+          "type": "pc-trust-item",
+          "settings": { "head": "60-night", "sub": "home trial" }
         },
         "item-2": {
-          "type": "_pc-trust-item",
-          "settings": { "icon": "icon-checkmark.svg", "label": "Crash-tested buckle" }
+          "type": "pc-trust-item",
+          "settings": { "head": "Free returns", "sub": "no questions" }
         },
         "item-3": {
-          "type": "_pc-trust-item",
-          "settings": { "icon": "icon-checkmark-burst.svg", "label": "30-day returns" }
+          "type": "pc-trust-item",
+          "settings": { "head": "2-year", "sub": "hardware warranty" }
         },
         "item-4": {
-          "type": "_pc-trust-item",
-          "settings": { "icon": "icon-account.svg", "label": "Vet-recommended fit" }
+          "type": "pc-trust-item",
+          "settings": { "head": "Ships today", "sub": "order by 2pm" }
         }
       },
       "block_order": ["item-1", "item-2", "item-3", "item-4"]

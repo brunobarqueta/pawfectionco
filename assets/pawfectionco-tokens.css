@@ -60,6 +60,12 @@
   --font-subheading--family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif !important;
   --font-heading--family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif !important;
   --font-accent--family: 'Cabinet Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif !important;
+
+  /* Page max-width — mockups are built to 1360px; Horizon's own "narrow"
+     page-width setting (the global default) maps to 90rem (1440px), so
+     repoint that one token rather than touching every section's width
+     setting individually. */
+  --narrow-page-width: 85rem;
 }
 
 /* ==========================================================================
@@ -127,17 +133,74 @@ button.quick-add__button,
 }
 
 /* ==========================================================================
-   Quick add — must stay permanently visible on mobile (never hover-revealed).
-   Horizon's own mobile_quick_add setting already sets opacity/display via
-   --quick-add-mobile-opacity / --quick-add-mobile-display when enabled; this
-   just restyles the pill to brand and guarantees no mobile hover-gate exists.
+   Quick add — product-card variant lives IN-FLOW at the bottom of the card
+   content (see blocks/_product-card-quick-add.liquid), not as an overlay on
+   the media well. Horizon's shared `quick-add` snippet/CSS is built for the
+   image-corner overlay pattern (position:absolute, collapses to a circle,
+   expands its label on desktop :hover only) — that's still correct for the
+   couple of other places it's reused (featured product, hotspots), so we
+   don't rewrite it globally. Instead this scopes a full override to the
+   `.pc-card-quick-add` wrapper so the button lays out as a permanently
+   visible, full-width pill instead.
    ========================================================================== */
-@media screen and (max-width: 749px) {
-  button.quick-add__button {
-    opacity: var(--quick-add-mobile-opacity, 1) !important;
-  }
+.pc-card-quick-add {
+  margin-top: auto;
+  padding-top: 4px;
 }
 
+.pc-card-quick-add .quick-add {
+  position: static;
+  inset: auto;
+  pointer-events: auto;
+  width: 100%;
+}
+
+.pc-card-quick-add .quick-add__product-form-component,
+.pc-card-quick-add .quick-add__product-form-component .shopify-product-form {
+  width: 100%;
+  height: auto;
+}
+
+.pc-card-quick-add .quick-add__product-form-component .shopify-product-form {
+  justify-content: stretch;
+  align-items: stretch;
+}
+
+.pc-card-quick-add button.quick-add__button {
+  position: static !important;
+  display: flex !important;
+  width: 100% !important;
+  max-inline-size: 100% !important;
+  height: 44px !important;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding-inline: var(--padding-sm, 12px) !important;
+  border-radius: var(--pc-r-pill);
+  border: 1.5px solid var(--pc-ink-900);
+  background: transparent !important;
+  color: var(--pc-ink-900);
+  opacity: 1 !important;
+  backdrop-filter: none;
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.pc-card-quick-add button.quick-add__button:hover {
+  background: var(--pc-lime) !important;
+  border-color: var(--pc-lime);
+  scale: 1;
+}
+
+.pc-card-quick-add button.quick-add__button > .add-to-cart-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+/* Other reuses of the shared overlay quick-add (featured product, hotspots):
+   restyle to brand without changing the overlay layout itself. */
 button.quick-add__button {
   border-radius: var(--pc-r-pill);
   border-color: var(--pc-ink-900);
@@ -186,6 +249,57 @@ input:checked ~ .swatch {
 .product-inventory:has(.product-inventory__icon-out_of_stock) .product-inventory__status {
   background: var(--pc-surface-sunken);
   color: var(--pc-ink-500);
+}
+
+/* ==========================================================================
+   Quantity stepper — spec calls for a pill shape with a 1.5px ink border and
+   a Cabinet Grotesk 800 tabular number in every context (cart, quick add,
+   PDP), not just where Horizon's primary-button radius happens to apply.
+   ========================================================================== */
+.quantity-selector {
+  border-radius: var(--pc-r-pill) !important;
+  border: 1.5px solid var(--pc-ink-900) !important;
+  background: var(--pc-surface-raised) !important;
+}
+
+.quantity-selector .quantity-minus,
+.quantity-selector .quantity-plus {
+  border-radius: var(--pc-r-pill) !important;
+  color: var(--pc-ink-900);
+}
+
+.quantity-selector .quantity-minus:hover,
+.quantity-selector .quantity-plus:hover {
+  background: var(--pc-surface-sunken);
+}
+
+.quantity-selector input[type='number'] {
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+  color: var(--pc-ink-900);
+}
+
+/* ==========================================================================
+   Form inputs — sunken fill, hairline border, ink border + separate 2px
+   focus ring on focus, background lifts to raised/white when focused.
+   Horizon's default expresses the border as a same-color box-shadow that
+   just thickens on focus; that doesn't read as a state change, so replace
+   it with a real border + explicit focus-visible ring here.
+   ========================================================================== */
+.field__input {
+  min-height: 48px;
+  border: 1.5px solid var(--pc-border-hairline) !important;
+  background-color: var(--pc-surface-sunken) !important;
+  box-shadow: none !important;
+}
+
+.field__input:focus {
+  border-color: var(--pc-ink-900) !important;
+  background-color: var(--pc-surface-raised) !important;
+  outline: 2px solid var(--pc-ink-900);
+  outline-offset: 2px;
 }
 
 /* ==========================================================================
@@ -271,41 +385,553 @@ body:has(cart-drawer[open]) .sticky-add-to-cart__bar {
 }
 
 /* ==========================================================================
-   Trust bar (sections/pc-trust-bar.liquid)
+   Trust strip (sections/pc-trust-bar.liquid)
    ========================================================================== */
-.pc-trust-bar {
+.pc-trust-bar__card {
   background: var(--pc-surface-sunken);
-}
-
-.pc-trust-bar__grid {
+  border-radius: var(--pc-r-lg);
+  padding: 16px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  max-width: 1360px;
-  margin-inline: auto;
-  padding-inline: 16px;
-}
-
-@media screen and (min-width: 750px) {
-  .pc-trust-bar__grid {
-    grid-template-columns: repeat(var(--pc-trust-count, 4), 1fr);
-    gap: 24px;
-    padding-inline: 40px;
-  }
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
 }
 
 .pc-trust-bar__item {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  gap: 3px;
   text-align: center;
-  padding-block: 8px;
 }
 
-.pc-trust-bar__icon {
-  width: 28px;
-  height: 28px;
+.pc-trust-bar__head {
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--pc-ink-900);
+}
+
+.pc-trust-bar__sub {
+  font-size: 13px;
+  color: var(--pc-ink-700);
+}
+
+/* ==========================================================================
+   Category tiles (sections/pc-category-tiles.liquid)
+   ========================================================================== */
+.pc-category-tiles__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.pc-category-tiles__heading {
+  margin: 0;
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: clamp(26px, 3.6vw, 38px);
+  letter-spacing: -0.02em;
+}
+
+.pc-category-tiles__all-link {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--pc-ink-900);
+}
+
+.pc-category-tiles__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.pc-category-tile {
+  text-decoration: none;
+  color: var(--pc-ink-900);
+  border-radius: var(--pc-r-xl);
+  overflow: hidden;
+  background: var(--pc-surface-raised);
+  box-shadow: var(--pc-shadow-card);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--pc-t-fast) var(--pc-ease-out), box-shadow var(--pc-t-fast) var(--pc-ease-out);
+}
+
+.pc-category-tile:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--pc-shadow-lift);
+  text-decoration: none;
+}
+
+.pc-category-tile__media {
+  aspect-ratio: 16 / 11;
+  background: var(--pc-surface-sunken);
+  background-image: repeating-linear-gradient(135deg, #e9e1cd 0 10px, #f1ebdc 10px 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pc-category-tile__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pc-category-tile__placeholder {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  color: var(--pc-ink-500);
+  background: var(--pc-surface-page);
+  padding: 6px 10px;
+  border-radius: var(--pc-r-pill);
+}
+
+.pc-category-tile__body {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pc-category-tile__title {
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.015em;
+}
+
+.pc-category-tile__sub {
+  font-size: 15px;
+  color: var(--pc-ink-700);
+  line-height: 1.45;
+}
+
+.pc-category-tile__count {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--pc-grape);
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   Proof band (sections/pc-proof-band.liquid)
+   ========================================================================== */
+.pc-proof-band__card {
+  background: var(--pc-ink-900);
+  color: var(--pc-surface-page);
+  border-radius: var(--pc-r-xl);
+  padding: clamp(28px, 4vw, 48px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(24px, 3vw, 44px);
+  align-items: start;
+}
+
+.pc-proof-band__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pc-proof-band__eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--pc-lime);
+}
+
+.pc-proof-band__heading {
+  margin: 0;
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: clamp(26px, 3.4vw, 40px);
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.pc-proof-band__body {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--pc-border-hairline);
+  text-wrap: pretty;
+}
+
+.pc-proof-band__link {
+  color: var(--pc-lime);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.pc-proof-band__link:hover {
+  color: var(--pc-lime);
+}
+
+.pc-proof-band__stats {
+  display: grid;
+  gap: clamp(24px, 3vw, 44px);
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.pc-proof-band__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid var(--pc-ink-700);
+  padding-top: 16px;
+}
+
+.pc-proof-band__stat-n {
+  font-family: var(--font-accent--family);
+  font-weight: 900;
+  font-size: clamp(34px, 4vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-proof-band__stat-label {
+  font-size: 15px;
+  color: var(--pc-ink-300);
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   Bundle (sections/pc-bundle.liquid)
+   ========================================================================== */
+.pc-bundle__card {
+  background: var(--pc-grape-soft);
+  border-radius: var(--pc-r-xl);
+  padding: clamp(24px, 3.5vw, 40px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: clamp(24px, 3vw, 40px);
+  align-items: center;
+}
+
+.pc-bundle__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pc-bundle__eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--pc-grape);
+}
+
+.pc-bundle__heading {
+  margin: 0;
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: clamp(26px, 3.4vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+}
+
+.pc-bundle__body {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--pc-ink-700);
+  text-wrap: pretty;
+}
+
+.pc-bundle__lines {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 15px;
+  color: var(--pc-ink-700);
+}
+
+.pc-bundle__line {
+  display: flex;
+  justify-content: space-between;
+  max-width: 320px;
+  gap: 12px;
+}
+
+.pc-bundle__line-price {
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-bundle__line--total {
+  border-top: 1px solid rgb(122 63 196 / 0.25);
+  padding-top: 10px;
+  margin-top: 2px;
+  font-weight: 700;
+  color: var(--pc-ink-900);
+}
+
+.pc-bundle__total-price {
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-bundle__add {
+  height: 56px;
+  max-width: 320px;
+  border: none;
+  border-radius: var(--pc-r-pill);
+  background: var(--pc-grape);
+  color: #fff;
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 17px;
+  cursor: pointer;
+  transition: background var(--pc-t-fast) var(--pc-ease-out), transform 90ms;
+}
+
+.pc-bundle__add:hover {
+  background: var(--pc-grape-press);
+}
+
+.pc-bundle__add:active {
+  transform: scale(0.97);
+}
+
+.pc-bundle__add:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.pc-bundle__empty-note {
+  font-size: 13px;
+  color: var(--pc-ink-500);
+}
+
+.pc-bundle__media {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.pc-bundle__media-tile {
+  aspect-ratio: 3 / 4;
+  border-radius: var(--pc-r-lg);
+  background: var(--pc-surface-raised);
+  display: flex;
+  align-items: flex-end;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.pc-bundle__media-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pc-bundle__media-label {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 10px;
+  color: var(--pc-ink-500);
+}
+
+/* ==========================================================================
+   Reviews grid (sections/pc-reviews.liquid)
+   ========================================================================== */
+.pc-reviews__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.pc-reviews__heading {
+  margin: 0;
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: clamp(26px, 3.6vw, 38px);
+  letter-spacing: -0.02em;
+}
+
+.pc-reviews__link {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--pc-ink-900);
+}
+
+.pc-reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.pc-review-card {
+  background: var(--pc-surface-raised);
+  border-radius: var(--pc-r-lg);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--pc-shadow-card);
+}
+
+.pc-review-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.pc-review-card__stars {
+  color: var(--pc-star);
+  letter-spacing: 1.5px;
+  font-size: 14px;
+}
+
+.pc-review-card__verified {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pc-success);
+}
+
+.pc-review-card__body {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  text-wrap: pretty;
+  color: var(--pc-ink-900);
+}
+
+.pc-review-card__who {
+  font-size: 13px;
+  color: var(--pc-ink-500);
+  border-top: 1px solid var(--pc-border-hairline);
+  padding-top: 12px;
+  margin-top: auto;
+}
+
+/* ==========================================================================
+   Editorial cards (sections/pc-editorial.liquid)
+   ========================================================================== */
+.pc-editorial__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.pc-editorial-card {
+  text-decoration: none;
+  border-radius: var(--pc-r-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.pc-editorial-card--dark {
+  background: var(--pc-ink-900);
+  color: var(--pc-surface-page);
+}
+
+.pc-editorial-card--light {
+  background: var(--pc-surface-raised);
+  color: var(--pc-ink-900);
+  box-shadow: var(--pc-shadow-card);
+}
+
+.pc-editorial-card:hover {
+  text-decoration: none;
+}
+
+.pc-editorial-card__media {
+  aspect-ratio: 16 / 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pc-editorial-card--dark .pc-editorial-card__media {
+  background: #26301f;
+  background-image: repeating-linear-gradient(135deg, #2c3724 0 10px, #26301f 10px 20px);
+}
+
+.pc-editorial-card--light .pc-editorial-card__media {
+  background: var(--pc-surface-sunken);
+  background-image: repeating-linear-gradient(135deg, #e9e1cd 0 10px, #f1ebdc 10px 20px);
+}
+
+.pc-editorial-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pc-editorial-card__placeholder {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 11px;
+  padding: 6px 10px;
+  border-radius: var(--pc-r-pill);
+}
+
+.pc-editorial-card--dark .pc-editorial-card__placeholder {
+  color: var(--pc-ink-300);
+  background: var(--pc-ink-900);
+}
+
+.pc-editorial-card--light .pc-editorial-card__placeholder {
+  color: var(--pc-ink-500);
+  background: var(--pc-surface-page);
+}
+
+.pc-editorial-card__body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.pc-editorial-card__eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.pc-editorial-card--dark .pc-editorial-card__eyebrow {
+  color: var(--pc-lime);
+}
+
+.pc-editorial-card--light .pc-editorial-card__eyebrow {
+  color: var(--pc-ink-500);
+}
+
+.pc-editorial-card__title {
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: clamp(21px, 2.4vw, 26px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.pc-editorial-card__link {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.pc-editorial-card--dark .pc-editorial-card__link {
+  color: var(--pc-lime);
+}
+
+.pc-editorial-card--light .pc-editorial-card__link {
   color: var(--pc-ink-900);
 }
 
@@ -402,6 +1028,47 @@ body:has(cart-drawer[open]) .sticky-add-to-cart__bar {
 .pc-testimonial-card__author-meta {
   font-size: 13px;
   color: var(--pc-ink-500);
+}
+
+/* ==========================================================================
+   Announcement bar — dark ink strip, dismissible (see
+   sections/header-announcements.liquid + assets/pc-announcement-dismiss.js).
+   Colors come from the section's background_color / contrast-override
+   settings (set to ink/cream in config/settings_data presets); this only
+   covers the dismiss control's position and the sticky header's z-index.
+   ========================================================================== */
+.announcement-bar {
+  position: relative;
+}
+
+.pc-announcement-dismiss {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  flex: none;
+  border: none;
+  border-radius: var(--pc-r-pill);
+  background: transparent;
+  color: var(--pc-ink-300);
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pc-announcement-dismiss:hover {
+  color: var(--pc-surface-page);
+  background: rgb(250 246 236 / 0.12);
+}
+
+.pc-announcement-dismiss:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 /* ==========================================================================

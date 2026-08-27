@@ -1,0 +1,167 @@
+{%- comment -%}
+  Pawfectionco bundle promo: grape-tinted card listing up to 3 real products
+  (block = product reference) with live prices, a computed total/savings,
+  and a single "Add all three" button that adds every variant to the cart in
+  one request (see assets/pc-bundle-add.js) — never navigates to /cart.
+{%- endcomment -%}
+
+{%- liquid
+  assign bundle_total = 0
+  assign variant_ids = ''
+  for block in section.blocks
+    if block.type == 'pc-bundle-item' and block.settings.product != blank
+      assign item_variant = block.settings.product.selected_or_first_available_variant
+      assign bundle_total = bundle_total | plus: item_variant.price
+      assign variant_ids = variant_ids | append: item_variant.id | append: ','
+    endif
+  endfor
+  assign variant_ids = variant_ids | remove_last: ','
+-%}
+
+<div
+  class="pc-bundle section section--page-width spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {{ section.shopify_attributes }}
+>
+  <div class="pc-bundle__card">
+    <div class="pc-bundle__copy">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="pc-bundle__eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="pc-bundle__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <p class="pc-bundle__body">{{ section.settings.body }}</p>
+      {%- endif -%}
+
+      <div class="pc-bundle__lines">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'pc-bundle-item' and block.settings.product != blank -%}
+            {%- assign item_variant = block.settings.product.selected_or_first_available_variant -%}
+            <div class="pc-bundle__line" {{ block.shopify_attributes }}>
+              <span>{{ block.settings.product.title }}</span>
+              <span class="pc-bundle__line-price">{{ item_variant.price | money }}</span>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if variant_ids != blank -%}
+          <div class="pc-bundle__line pc-bundle__line--total">
+            <span>Together</span>
+            <span class="pc-bundle__total-price">{{ bundle_total | money }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if variant_ids != blank -%}
+        <button
+          type="button"
+          class="pc-bundle__add"
+          data-pc-bundle-add
+          data-variant-ids="{{ variant_ids }}"
+        >{{ section.settings.button_text | escape }}</button>
+        <script src="{{ 'pc-bundle-add.js' | asset_url }}" type="module"></script>
+      {%- else -%}
+        <p class="pc-bundle__empty-note">Add products above to enable the combined "Add all" button.</p>
+      {%- endif -%}
+    </div>
+
+    <div class="pc-bundle__media">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'pc-bundle-item' -%}
+          <div class="pc-bundle__media-tile">
+            {%- if block.settings.product.featured_image != blank -%}
+              {{ block.settings.product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy', class: 'pc-bundle__media-image' }}
+            {%- else -%}
+              <span class="pc-bundle__media-label">{{ block.settings.product.title | default: 'item' | truncatewords: 1, '' }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bundle",
+  "tag": "div",
+  "blocks": [
+    {
+      "type": "pc-bundle-item",
+      "name": "Bundle item",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Bundle"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The road trip kit"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "Body",
+      "default": "Everything for a car that survives the dog."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button label",
+      "default": "Add all three"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bundle",
+      "category": "Pawfectionco",
+      "settings": {
+        "eyebrow": "Bundle",
+        "heading": "The road trip kit",
+        "body": "Everything for a car that survives the dog.",
+        "button_text": "Add all three"
+      }
+    }
+  ]
+}
+{% endschema %}
