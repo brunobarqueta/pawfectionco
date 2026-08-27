@@ -1,7 +1,9 @@
 {%- comment -%}
-  Pawfectionco trust strip: a row of merchant-editable "60-night / home
-  trial" style two-line stats on a sunken card. Matches the Homepage.dc.html
-  mockup's trust strip exactly (no icons — just bold headline + muted sub).
+  Pawfectionco trust strip: a row of merchant-editable two-line stats
+  (e.g. "Free shipping / on orders $75+") on a sunken card. Matches the
+  Homepage.dc.html mockup's trust strip layout (no icons — bold headline +
+  muted sub). Content is real/honest claims only — no warranty or trial
+  period, since this merchant doesn't offer either.
 {%- endcomment -%}
 
 <div
@@ -37,13 +39,13 @@
           "type": "text",
           "id": "head",
           "label": "Headline",
-          "default": "60-night"
+          "default": "Free shipping"
         },
         {
           "type": "text",
           "id": "sub",
           "label": "Subtext",
-          "default": "home trial"
+          "default": "on orders $75+"
         }
       ]
     }
@@ -82,19 +84,19 @@
       "blocks": {
         "item-1": {
           "type": "pc-trust-item",
-          "settings": { "head": "60-night", "sub": "home trial" }
+          "settings": { "head": "Free shipping", "sub": "on orders $75+" }
         },
         "item-2": {
           "type": "pc-trust-item",
-          "settings": { "head": "Free returns", "sub": "no questions" }
+          "settings": { "head": "Free returns", "sub": "within 30 days" }
         },
         "item-3": {
           "type": "pc-trust-item",
-          "settings": { "head": "2-year", "sub": "hardware warranty" }
+          "settings": { "head": "Secure checkout", "sub": "SSL encrypted" }
         },
         "item-4": {
           "type": "pc-trust-item",
-          "settings": { "head": "Ships today", "sub": "order by 2pm" }
+          "settings": { "head": "Fast dispatch", "sub": "ships in 1 business day" }
         }
       },
       "block_order": ["item-1", "item-2", "item-3", "item-4"]

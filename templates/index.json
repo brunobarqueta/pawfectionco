@@ -21,7 +21,7 @@
         "badge-2": {
           "type": "pc-hero-badge",
           "settings": {
-            "text": "60-night trial",
+            "text": "Free returns within 30 days",
             "style": "outline"
           }
         }
@@ -52,29 +52,29 @@
         "item-1": {
           "type": "pc-trust-item",
           "settings": {
-            "head": "60-night",
-            "sub": "home trial"
+            "head": "Free shipping",
+            "sub": "on orders $75+"
           }
         },
         "item-2": {
           "type": "pc-trust-item",
           "settings": {
-            "head": "60-night",
-            "sub": "home trial"
+            "head": "Free returns",
+            "sub": "within 30 days"
           }
         },
         "item-3": {
           "type": "pc-trust-item",
           "settings": {
-            "head": "60-night",
-            "sub": "home trial"
+            "head": "Secure checkout",
+            "sub": "SSL encrypted"
           }
         },
         "item-4": {
           "type": "pc-trust-item",
           "settings": {
-            "head": "60-night",
-            "sub": "home trial"
+            "head": "Fast dispatch",
+            "sub": "ships in 1 business day"
           }
         }
       },
@@ -167,8 +167,8 @@
         "stat-3": {
           "type": "pc-stat",
           "settings": {
-            "number": "94%",
-            "label": "Of owners keep it past the 60-night trial"
+            "number": "30 days",
+            "label": "To send anything back, no questions asked"
           }
         }
       },

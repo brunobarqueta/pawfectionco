@@ -1,0 +1,128 @@
+{%- comment -%}
+  Pawfectionco footer: brand + tagline, three real Shopify menu columns, and
+  a bottom bar with copyright + the store's actual enabled payment icons
+  (not fabricated VISA/MC/AMEX text badges). Matches Homepage.dc.html.
+  Menu handles are set in this section's settings — create the matching
+  menus in Admin > Navigation and this fills in automatically.
+{%- endcomment -%}
+
+<footer
+  class="pc-footer spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {{ section.shopify_attributes }}
+>
+  <div class="pc-footer__inner section--page-width">
+    <div class="pc-footer__columns">
+      <div class="pc-footer__brand">
+        <span class="pc-footer__wordmark">{{ section.settings.brand_name | escape }}</span>
+        <p class="pc-footer__tagline">{{ section.settings.tagline | escape }}</p>
+      </div>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'pc-footer-menu' -%}
+          {%- assign menu = block.settings.menu -%}
+          {%- if menu != blank and menu.links.size > 0 -%}
+            <div class="pc-footer__menu-column" {{ block.shopify_attributes }}>
+              <span class="pc-footer__menu-heading">{{ block.settings.heading | escape }}</span>
+              {%- for link in menu.links -%}
+                <a href="{{ link.url }}" class="pc-footer__menu-link">{{ link.title }}</a>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <div class="pc-footer__bottom">
+      <span>© {{ 'now' | date: '%Y' }} {{ section.settings.brand_name | escape }}</span>
+      {%- if shop.enabled_payment_types.size > 0 -%}
+        <div class="pc-footer__payments">
+          {%- for type in shop.enabled_payment_types -%}
+            {{ type | payment_type_svg_tag: class: 'pc-footer__payment-icon' }}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "footer",
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "blocks": [
+    {
+      "type": "pc-footer-menu",
+      "name": "Menu column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Column heading",
+          "default": "Shop"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu",
+          "info": "Create this menu in Admin → Navigation with a matching handle (e.g. footer-shop)."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "brand_name",
+      "label": "Brand name",
+      "default": "pawfectionco"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Gear that survives the dog. Car, bath and play."
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 28
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer",
+      "category": "Pawfectionco",
+      "blocks": {
+        "col-1": { "type": "pc-footer-menu", "settings": { "heading": "Shop" } },
+        "col-2": { "type": "pc-footer-menu", "settings": { "heading": "Help" } },
+        "col-3": { "type": "pc-footer-menu", "settings": { "heading": "Company" } }
+      },
+      "block_order": ["col-1", "col-2", "col-3"]
+    }
+  ]
+}
+{% endschema %}

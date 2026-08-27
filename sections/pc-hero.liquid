@@ -111,7 +111,24 @@
             </div>
           </div>
           <div class="pc-hero__mini-card-add">
-            {% render 'quick-add', product: product, section_id: section.id %}
+            <button
+              type="button"
+              class="pc-quick-add-button"
+              data-pc-quick-add
+              data-variant-id="{{ variant.id }}"
+              data-added-label="{{ 'actions.added' | t | default: 'Added' }}"
+              {% unless variant.available %}
+                disabled
+              {% endunless %}
+            >
+              <span class="pc-quick-add-button__label">
+                {%- if variant.available == false -%}
+                  {{ 'content.product_badge_sold_out' | t }}
+                {%- else -%}
+                  Add
+                {%- endif -%}
+              </span>
+            </button>
           </div>
         </div>
       {%- endif -%}
@@ -355,30 +372,20 @@
     flex: none;
   }
 
-  .pc-hero__mini-card-add .quick-add {
-    position: static;
-    inset: auto;
-    pointer-events: auto;
+  .pc-hero__mini-card-add .pc-quick-add-button {
+    width: max-content;
+    padding-inline: 18px;
+    background: var(--pc-lime);
+    border-color: var(--pc-lime);
   }
 
-  .pc-hero__mini-card-add button.quick-add__button {
-    position: static !important;
-    display: flex !important;
-    width: max-content !important;
-    max-inline-size: none !important;
-    height: 44px !important;
-    padding-inline: 18px !important;
-    opacity: 1 !important;
-    border-radius: var(--pc-r-pill);
-    border: none;
-    background: var(--pc-lime) !important;
-    color: var(--pc-ink-900);
-    font-family: var(--font-accent--family);
-    font-weight: 700;
-    font-size: 15px;
-    backdrop-filter: none;
+  .pc-hero__mini-card-add .pc-quick-add-button:hover:not(:disabled) {
+    background: var(--pc-lime-press);
+    border-color: var(--pc-lime-press);
   }
 {% endstylesheet %}
+
+<script src="{{ 'pc-quick-add.js' | asset_url }}" type="module"></script>
 
 {% schema %}
 {
@@ -533,7 +540,7 @@
         },
         "badge-2": {
           "type": "pc-hero-badge",
-          "settings": { "text": "60-night trial", "style": "outline" }
+          "settings": { "text": "Free returns within 30 days", "style": "outline" }
         }
       },
       "block_order": ["badge-1", "badge-2"]

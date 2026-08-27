@@ -1537,3 +1537,133 @@ body:has(cart-drawer[open]) .sticky-add-to-cart__bar {
 .pc-email-signup__message--success {
   color: var(--pc-success);
 }
+
+/* ==========================================================================
+   Header nav — mockup's nav links are body font (Satoshi) at weight 700,
+   15px; Horizon's menu defaults to a lighter weight.
+   ========================================================================== */
+.menu-list__link-title {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* Remove the account/profile icon from the header per merchant request.
+   shop.customer_accounts_enabled is a store-level setting (Settings >
+   Customer accounts), not a theme one — this only hides the header icon,
+   it doesn't disable customer accounts as a feature. */
+.account-button {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Announcement bar text — force size/weight directly rather than relying on
+   the block's font-size/weight settings, matching the mockup's 14px/700.
+   ========================================================================== */
+.pc-announcement-simple__text {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+.announcement-bar__text {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+/* ==========================================================================
+   Footer (sections/pc-footer.liquid)
+   ========================================================================== */
+.pc-footer {
+  margin-top: clamp(48px, 6vw, 96px);
+  background: var(--pc-ink-900);
+  color: var(--pc-surface-page);
+}
+
+.pc-footer__inner {
+  max-width: var(--narrow-page-width, 85rem);
+  margin: 0 auto;
+  padding-inline: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+@media screen and (min-width: 750px) {
+  .pc-footer__inner {
+    padding-inline: 40px;
+  }
+}
+
+.pc-footer__columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 28px;
+}
+
+.pc-footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pc-footer__wordmark {
+  font-family: var(--font-accent--family);
+  font-weight: 900;
+  font-size: 24px;
+  letter-spacing: -0.025em;
+}
+
+.pc-footer__tagline {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--pc-ink-300);
+  max-width: 280px;
+}
+
+.pc-footer__menu-column {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.pc-footer__menu-heading {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--pc-ink-300);
+}
+
+.pc-footer__menu-link {
+  font-size: 15px;
+  color: var(--pc-surface-page);
+}
+
+.pc-footer__menu-link:hover {
+  color: var(--pc-lime);
+}
+
+.pc-footer__bottom {
+  border-top: 1px solid var(--pc-ink-700);
+  padding-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--pc-ink-300);
+}
+
+.pc-footer__payments {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.pc-footer__payment-icon {
+  height: 26px;
+  width: auto;
+  border-radius: 6px;
+}

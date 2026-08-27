@@ -13,12 +13,37 @@
     "header_announcements_9jGBFp": {
       "type": "header-announcements",
       "blocks": {
-        "announcement_BxgCk9": {
+        "announcement_1": {
           "type": "_announcement",
           "settings": {
-            "text": "Free delivery over $49 · Order by 2pm for same-day dispatch",
+            "text": "Free shipping on orders over $75",
             "font": "var(--font-subheading--family)",
-            "font_size": "0.75rem",
+            "font_size": "0.875rem",
+            "weight": "700",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "announcement_2": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Free returns within 30 days",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.875rem",
+            "weight": "700",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "announcement_3": {
+          "type": "_announcement",
+          "settings": {
+            "text": "Order today, ships within 1 business day",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.875rem",
+            "weight": "700",
             "letter_spacing": "normal",
             "case": "none"
           },
@@ -26,7 +51,9 @@
         }
       },
       "block_order": [
-        "announcement_BxgCk9"
+        "announcement_1",
+        "announcement_2",
+        "announcement_3"
       ],
       "name": "t:names.announcement_bar",
       "settings": {
