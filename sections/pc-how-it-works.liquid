@@ -1,0 +1,86 @@
+{%- comment -%}
+  Pawfectionco "how it works" PDP section: dark card with an eyebrow/heading/
+  body on the left and up to 4 numbered steps on the right. Entirely
+  product-specific content, read from metafields/metaobjects rather than
+  hardcoded — see the setup instructions delivered alongside this section
+  for exactly which metaobject/metafield definitions to create.
+
+  Renders nothing if the product has no how-it-works heading set, so it
+  never shows an empty dark box on products that don't use this yet.
+{%- endcomment -%}
+
+{%- liquid
+  assign heading = product.metafields.custom.how_it_works_heading.value
+  assign steps = product.metafields.custom.how_it_works_steps.value
+-%}
+
+{%- if heading != blank -%}
+  <div
+    class="pc-how-it-works section section--page-width spacing-style"
+    style="{% render 'spacing-style', settings: section.settings %}"
+    {{ section.shopify_attributes }}
+  >
+    <div class="pc-how-it-works__card">
+      <div class="pc-how-it-works__intro">
+        {%- if product.metafields.custom.how_it_works_eyebrow.value != blank -%}
+          <span class="pc-how-it-works__eyebrow">{{ product.metafields.custom.how_it_works_eyebrow.value }}</span>
+        {%- endif -%}
+        <h2 class="pc-how-it-works__heading">{{ heading }}</h2>
+        {%- if product.metafields.custom.how_it_works_body.value != blank -%}
+          <p class="pc-how-it-works__body">{{ product.metafields.custom.how_it_works_body.value }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- for step in steps limit: 4 -%}
+        <div class="pc-how-it-works__step">
+          <span class="pc-how-it-works__step-n">{{ step.step_number.value }}</span>
+          <span class="pc-how-it-works__step-title">{{ step.title.value }}</span>
+          <span class="pc-how-it-works__step-body">{{ step.body.value }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "How it works (PDP)",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Content comes entirely from the current product's metafields (custom.how_it_works_eyebrow/heading/body/steps) — there's nothing to configure here. This section hides itself on products with no how-it-works heading set."
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "How it works (PDP)",
+      "category": "Pawfectionco"
+    }
+  ]
+}
+{% endschema %}

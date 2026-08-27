@@ -1667,3 +1667,247 @@ body:has(cart-drawer[open]) .sticky-add-to-cart__bar {
   width: auto;
   border-radius: 6px;
 }
+
+/* ==========================================================================
+   PDP value prop (metafield-driven, see templates/product.json
+   text_valueProp block)
+   ========================================================================== */
+.pc-value-prop {
+  margin: 0;
+  font-size: clamp(17px, 1.5vw, 18px);
+  line-height: 1.5;
+  color: var(--pc-ink-700);
+  text-wrap: pretty;
+}
+
+/* ==========================================================================
+   PDP FAQ accordion (metaobject-driven, see templates/product.json
+   accordion_details block) — plain <details>/<summary>, no JS needed.
+   ========================================================================== */
+.pc-faq {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--pc-border-hairline);
+  margin-top: 6px;
+}
+
+.pc-faq__row {
+  border-bottom: 1px solid var(--pc-border-hairline);
+}
+
+.pc-faq__summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 0;
+  cursor: pointer;
+  font-family: var(--font-accent--family);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--pc-ink-900);
+  list-style: none;
+}
+
+.pc-faq__summary::-webkit-details-marker {
+  display: none;
+}
+
+.pc-faq__sign {
+  flex: none;
+  font-size: 19px;
+  color: var(--pc-ink-500);
+  line-height: 1;
+}
+
+.pc-faq__sign::before {
+  content: '+';
+}
+
+.pc-faq__row[open] .pc-faq__sign::before {
+  content: '\2212';
+}
+
+.pc-faq__body {
+  padding: 0 0 18px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--pc-ink-700);
+  max-width: 560px;
+  text-wrap: pretty;
+}
+
+/* ==========================================================================
+   How it works (sections/pc-how-it-works.liquid)
+   ========================================================================== */
+.pc-how-it-works__card {
+  background: var(--pc-ink-900);
+  color: var(--pc-surface-page);
+  border-radius: var(--pc-r-xl);
+  padding: clamp(28px, 4vw, 48px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(24px, 3vw, 40px);
+}
+
+.pc-how-it-works__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pc-how-it-works__eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--pc-lime);
+}
+
+.pc-how-it-works__heading {
+  margin: 0;
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: clamp(26px, 3.2vw, 36px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.pc-how-it-works__body {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--pc-border-hairline);
+  text-wrap: pretty;
+}
+
+.pc-how-it-works__step {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  border-top: 1px solid var(--pc-ink-700);
+  padding-top: 16px;
+}
+
+.pc-how-it-works__step-n {
+  font-family: var(--font-accent--family);
+  font-weight: 900;
+  font-size: 13px;
+  color: var(--pc-lime);
+}
+
+.pc-how-it-works__step-title {
+  font-family: var(--font-accent--family);
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: -0.015em;
+}
+
+.pc-how-it-works__step-body {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--pc-ink-300);
+}
+
+/* ==========================================================================
+   PDP reviews (sections/pc-pdp-reviews.liquid) — reuses .pc-review-card*
+   naming intentionally different from the homepage's pc-review-card to
+   avoid clashing layouts (this one has no avatar row, matches the PDP grid).
+   ========================================================================== */
+.pc-pdp-reviews__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.pc-pdp-reviews__summary {
+  background: var(--pc-surface-raised);
+  border-radius: var(--pc-r-lg);
+  padding: 24px;
+  box-shadow: var(--pc-shadow-card);
+}
+
+.pc-pdp-reviews__summary-top {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.pc-pdp-reviews__average {
+  font-family: var(--font-accent--family);
+  font-weight: 900;
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.pc-pdp-reviews__stars {
+  color: var(--pc-star);
+  letter-spacing: 2px;
+  font-size: 15px;
+}
+
+.pc-pdp-reviews__count {
+  font-size: 13px;
+  color: var(--pc-ink-500);
+  margin-top: 3px;
+}
+
+.pc-pdp-review-card {
+  background: var(--pc-surface-raised);
+  border-radius: var(--pc-r-lg);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--pc-shadow-card);
+}
+
+.pc-pdp-review-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.pc-pdp-review-card__stars {
+  color: var(--pc-star);
+  letter-spacing: 1.5px;
+  font-size: 14px;
+}
+
+.pc-pdp-review-card__verified {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--pc-success);
+}
+
+.pc-pdp-review-card__body {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.55;
+  text-wrap: pretty;
+  color: var(--pc-ink-900);
+}
+
+.pc-pdp-review-card__who {
+  font-size: 13px;
+  color: var(--pc-ink-500);
+  border-top: 1px solid var(--pc-border-hairline);
+  padding-top: 12px;
+  margin-top: auto;
+}
+
+/* ==========================================================================
+   Add to cart — text only, no cart-bag icon (matches PDP.dc.html; Horizon's
+   add-to-cart-button always renders the icon via a hardcoded show_icon prop
+   in blocks/add-to-cart.liquid, so this is hidden via CSS rather than
+   editing that core file).
+   ========================================================================== */
+.add-to-cart-icon {
+  display: none;
+}

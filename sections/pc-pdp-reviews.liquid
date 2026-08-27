@@ -1,0 +1,108 @@
+{%- comment -%}
+  Pawfectionco PDP reviews: aggregate rating (Shopify's standard
+  reviews.rating / reviews.rating_count metafields — same ones
+  blocks/review.liquid already reads in the buy box) plus individual review
+  cards from a product-specific metaobject list. No review app is
+  installed, so none of this is fabricated — it renders only what's
+  actually set on the product, and disappears entirely if nothing is.
+{%- endcomment -%}
+
+{%- liquid
+  assign rating = product.metafields.reviews.rating.value.rating
+  assign rating_count = product.metafields.reviews.rating_count.value
+  assign reviews = product.metafields.custom.reviews.value
+-%}
+
+{%- if rating != blank or reviews.size > 0 -%}
+  <div
+    id="reviews"
+    class="pc-pdp-reviews section section--page-width spacing-style"
+    style="{% render 'spacing-style', settings: section.settings %}"
+    {{ section.shopify_attributes }}
+  >
+    <div class="pc-pdp-reviews__grid">
+      {%- if rating != blank -%}
+        <div class="pc-pdp-reviews__summary">
+          <div class="pc-pdp-reviews__summary-top">
+            <span class="pc-pdp-reviews__average">{{ rating }}</span>
+            <div>
+              <div
+                class="pc-pdp-reviews__stars"
+                role="img"
+                aria-label="{{ rating }} out of 5 stars"
+              >{%- for i in (1..5) -%}★{%- endfor -%}</div>
+              {%- if rating_count -%}
+                <div class="pc-pdp-reviews__count">{{ rating_count }} reviews</div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- for review in reviews limit: 6 -%}
+        <article class="pc-pdp-review-card">
+          <div class="pc-pdp-review-card__top">
+            <span
+              class="pc-pdp-review-card__stars"
+              role="img"
+              aria-label="{{ review.rating.value }} out of 5 stars"
+            >{%- for i in (1..5) -%}★{%- endfor -%}</span>
+            {%- if review.verified.value -%}
+              <span class="pc-pdp-review-card__verified">✓ Verified</span>
+            {%- endif -%}
+          </div>
+          <p class="pc-pdp-review-card__body">{{ review.body.value }}</p>
+          <div class="pc-pdp-review-card__who">
+            {{- review.author.value -}}
+            {%- if review.pet_detail.value != blank -%}
+              · {{ review.pet_detail.value }}
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Reviews (PDP)",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Rating summary reads the standard reviews.rating / reviews.rating_count metafields; review cards read a custom.reviews metaobject list. Both are per-product — see the setup instructions for exactly what to create. This section hides itself entirely when a product has no rating and no reviews set, rather than showing anything fabricated."
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews (PDP)",
+      "category": "Pawfectionco"
+    }
+  ]
+}
+{% endschema %}

@@ -56,6 +56,25 @@
       {%- for product_option in product_resource.options_with_values -%}
         {%- liquid
           assign swatch_count = product_option.values | map: 'swatch' | compact | size
+
+          # Pawfectionco: this store links Color option values to a custom
+          # `pc_swatch` metaobject (label + color) rather than Shopify's
+          # native color-pattern swatch system, so ProductOptionValue.swatch
+          # stays blank even though real color data exists. Count those too,
+          # matched by handleized option value name against the metaobject
+          # handle (e.g. "Black" -> metaobjects['pc_swatch']['black']).
+          assign pc_swatch_count = 0
+          for pc_check_value in product_option.values
+            if pc_check_value.swatch == blank
+              assign pc_check_handle = pc_check_value | handleize
+              assign pc_check_entry = metaobjects['pc_swatch'][pc_check_handle]
+              if pc_check_entry != blank
+                assign pc_swatch_count = pc_swatch_count | plus: 1
+              endif
+            endif
+          endfor
+          assign swatch_count = swatch_count | plus: pc_swatch_count
+
           assign variant_style = block_settings.variant_style
 
           if swatch_count > 0 and block_settings.show_swatches
@@ -143,11 +162,30 @@
                     endif
                   %}
 
-                  {% render 'swatch',
-                    swatch: product_option_value.swatch,
-                    variant_image: featured_media,
-                    mode: 'unscaled'
-                  %}
+                  {% if product_option_value.swatch != blank %}
+                    {% render 'swatch',
+                      swatch: product_option_value.swatch,
+                      variant_image: featured_media,
+                      mode: 'unscaled'
+                    %}
+                  {% else %}
+                    {%- liquid
+                      assign pc_swatch_handle = product_option_value | handleize
+                      assign pc_swatch_entry = metaobjects['pc_swatch'][pc_swatch_handle]
+                    -%}
+                    {% if pc_swatch_entry != blank %}
+                      <span
+                        class="swatch swatch--unscaled"
+                        style="--swatch-background: {{ pc_swatch_entry.color.value }};"
+                      ></span>
+                    {% else %}
+                      {% render 'swatch',
+                        swatch: product_option_value.swatch,
+                        variant_image: featured_media,
+                        mode: 'unscaled'
+                      %}
+                    {% endif %}
+                  {% endif %}
                 {% else %}
                   {% if product_option_value.available == true %}
                     <span

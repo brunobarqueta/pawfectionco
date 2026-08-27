@@ -6,8 +6,7 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */
-{
+ */{
   "current": {
     "logo_height": 36,
     "logo_height_mobile": 28,
@@ -90,8 +89,8 @@
     "product_corner_radius": 20,
     "card_corner_radius": 16,
     "show_variant_image": false,
-    "variant_swatch_width": 34,
-    "variant_swatch_height": 34,
+    "variant_swatch_width": 44,
+    "variant_swatch_height": 44,
     "variant_swatch_radius": 100,
     "palette_variant_background": "#fff",
     "palette_variant_text": "#151d12",
@@ -114,7 +113,8 @@
     "button_text_case_secondary": "default",
     "badge_font_family": "accent",
     "quick_add": true,
-    "mobile_quick_add": true
+    "mobile_quick_add": true,
+    "auto_open_cart_drawer": true
   },
   "presets": {
     "Horizon": {

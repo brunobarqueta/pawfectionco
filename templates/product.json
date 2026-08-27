@@ -187,28 +187,10 @@
               "blocks": {}
             },
             "text_valueProp": {
-              "type": "text",
-              "name": "t:names.text",
+              "type": "custom-liquid",
+              "name": "t:names.custom_liquid",
               "settings": {
-                "text": "<p>Buckles into your car's existing seat belt in seconds and keeps up to 45 lb of dog anchored to the seat, not the windshield.</p>",
-                "width": "100%",
-                "max_width": "narrow",
-                "alignment": "left",
-                "type_preset": "paragraph",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "custom_liquid": "{% if closest.product.metafields.custom.value_prop.value != blank %}<p class=\"pc-value-prop\">{{ closest.product.metafields.custom.value_prop.value }}</p>{% endif %}"
               },
               "blocks": {}
             },
@@ -473,74 +455,12 @@
               "blocks": {}
             },
             "accordion_details": {
-              "type": "accordion",
-              "name": "t:names.accordion",
+              "type": "custom-liquid",
+              "name": "t:names.custom_liquid",
               "settings": {
-                "icon": "plus",
-                "dividers": true,
-                "type_preset": "h6"
+                "custom_liquid": "{% liquid\n  assign rows = closest.product.metafields.custom.faq_rows.value\n%}{% if rows.size > 0 %}<div class=\"pc-faq\">{% for row in rows %}<details class=\"pc-faq__row\"><summary class=\"pc-faq__summary\">{{ row.heading.value }}<span class=\"pc-faq__sign\" aria-hidden=\"true\"></span></summary><div class=\"pc-faq__body\">{{ row.body.value | newline_to_br }}</div></details>{% endfor %}</div>{% endif %}"
               },
-              "blocks": {
-                "row_shipping_returns": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Shipping & returns"
-                  },
-                  "blocks": {
-                    "text": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Orders ship within 1 business day from our US warehouse. Returns are accepted within 30 days in original packaging for a full refund.</p>",
-                        "width": "100%"
-                      }
-                    }
-                  },
-                  "block_order": [
-                    "text"
-                  ]
-                },
-                "row_size_fit": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Size & fit"
-                  },
-                  "blocks": {
-                    "text": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Measure snugly around the widest part of your dog's chest before ordering. Sizes run true; when between sizes, size up for comfort.</p>",
-                        "width": "100%"
-                      }
-                    }
-                  },
-                  "block_order": [
-                    "text"
-                  ]
-                },
-                "row_care": {
-                  "type": "_accordion-row",
-                  "settings": {
-                    "heading": "Care instructions"
-                  },
-                  "blocks": {
-                    "text": {
-                      "type": "text",
-                      "settings": {
-                        "text": "<p>Spot clean the webbing with mild soap and air dry. Do not machine wash or bleach the buckle hardware.</p>",
-                        "width": "100%"
-                      }
-                    }
-                  },
-                  "block_order": [
-                    "text"
-                  ]
-                }
-              },
-              "block_order": [
-                "row_shipping_returns",
-                "row_size_fit",
-                "row_care"
-              ]
+              "blocks": {}
             }
           },
           "block_order": [
@@ -579,7 +499,7 @@
           "type": "text",
           "name": "t:names.header",
           "settings": {
-            "text": "<h2>You may also like</h2>",
+            "text": "<h2>Bought together</h2>",
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -602,99 +522,10 @@
           "blocks": {}
         },
         "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
+          "type": "_pc-recommendation-card",
+          "name": "Product card",
           "static": true,
-          "settings": {
-            "product_card_gap": 8,
-            "background_color": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 14,
-            "padding-block-start": 0,
-            "padding-block-end": 8,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_DNizbJ": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "portrait",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_color": "",
-                "border_radius": 14,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_M7MJkb": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_gLWgA6": {
-              "type": "price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "text_color": "",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_card_quick_add": {
-              "type": "_product-card-quick-add",
-              "name": "Quick add",
-              "static": true,
-              "settings": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_DNizbJ",
-            "product_title_M7MJkb",
-            "price_gLWgA6"
-          ]
+          "settings": {}
         }
       },
       "block_order": [
@@ -719,10 +550,28 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "pc_how_it_works_1": {
+      "type": "pc-how-it-works",
+      "name": "How it works",
+      "settings": {
+        "padding-block-start": 48,
+        "padding-block-end": 0
+      }
+    },
+    "pc_pdp_reviews_1": {
+      "type": "pc-pdp-reviews",
+      "name": "Reviews",
+      "settings": {
+        "padding-block-start": 48,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
     "main",
+    "pc_how_it_works_1",
+    "pc_pdp_reviews_1",
     "product_recommendations_qggXJq"
   ]
 }

@@ -25,10 +25,20 @@
   assign rating = product.metafields.reviews.rating.value
   assign rating_count = product.metafields.reviews.rating_count.value
 
+  # Pawfectionco: this store links Color option values to a custom
+  # `pc_swatch` metaobject (label + color) rather than Shopify's native
+  # color-pattern swatch system, so ProductOptionValue.swatch stays blank
+  # even though real color data exists. Fall back to a metaobject lookup by
+  # handleized value name (e.g. "Black" -> metaobjects['pc_swatch']['black']).
   assign swatch_option = null
   for option in product.options_with_values
     assign first_value = option.values.first
     if first_value.swatch != blank
+      assign swatch_option = option
+      break
+    endif
+    assign pc_first_handle = first_value | handleize
+    if metaobjects['pc_swatch'][pc_first_handle] != blank
       assign swatch_option = option
       break
     endif
@@ -87,9 +97,24 @@
     {%- if swatch_option != null -%}
       <div class="pc-product-card__swatches">
         {%- for value in swatch_option.values limit: 5 -%}
+          {%- liquid
+            assign pc_swatch_color = null
+            assign pc_swatch_image = null
+            if value.swatch.color
+              assign pc_swatch_color = value.swatch.color
+            elsif value.swatch.image
+              assign pc_swatch_image = value.swatch.image
+            else
+              assign pc_value_handle = value | handleize
+              assign pc_value_entry = metaobjects['pc_swatch'][pc_value_handle]
+              if pc_value_entry != blank
+                assign pc_swatch_color = pc_value_entry.color.value
+              endif
+            endif
+          -%}
           <span
             class="pc-product-card__swatch"
-            style="background: {% if value.swatch.color %}{{ value.swatch.color }}{% else %}url({{ value.swatch.image | image_url: width: 40 }}){% endif %};"
+            style="background: {% if pc_swatch_color %}{{ pc_swatch_color }}{% elsif pc_swatch_image %}url({{ pc_swatch_image | image_url: width: 40 }}){% endif %};"
             aria-label="{{ value }}"
           ></span>
         {%- endfor -%}

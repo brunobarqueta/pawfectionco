@@ -1,0 +1,19 @@
+{%- doc -%}
+  Wraps snippets/pc-product-card.liquid (the same card used on the homepage
+  featured collection) for use inside sections/product-recommendations.liquid,
+  which renders one of these per recommended product via `content_for
+  'block', type: '_pc-recommendation-card'`. Kept as its own block type
+  rather than changing the shared `_product-card` block, since that one is
+  also used by collection/search/cart — out of scope for this pass.
+{%- enddoc -%}
+
+{% render 'pc-product-card', product: closest.product %}
+<script src="{{ 'pc-quick-add.js' | asset_url }}" type="module"></script>
+
+{% schema %}
+{
+  "name": "Product card",
+  "tag": null,
+  "settings": []
+}
+{% endschema %}
