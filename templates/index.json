@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "pc_hero_1": {
       "type": "pc-hero",
@@ -277,22 +278,22 @@
           "type": "pc-editorial-card",
           "settings": {
             "style": "dark",
-            "image": "shopify://shop_images/photo-1583512603805-3cc6b41f3edb.jpg",
+            "image": "shopify://shop_images/photo-1672426637959-49f39230ad7e.jpg",
             "eyebrow": "Field notes",
             "title": "How to wash a dog who hates water",
             "link_text": "Read the guide",
-            "link": ""
+            "link": "shopify://blogs/news/how-to-wash-a-dog-that-hates-water"
           }
         },
         "card-2": {
           "type": "pc-editorial-card",
           "settings": {
             "style": "light",
-            "image": "shopify://shop_images/photo-1576201836106-db1758fd1c97.jpg",
+            "image": "shopify://shop_images/photo-1519592317156-7125c5d24af2.jpg",
             "eyebrow": "Safety",
             "title": "Why collars fail in a crash and harnesses don't",
             "link_text": "Read the guide",
-            "link": ""
+            "link": "shopify://blogs/news/why-collars-fail-in-a-crash-and-harnesses-dont"
           }
         }
       },
